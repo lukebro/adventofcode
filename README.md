@@ -1,8 +1,8 @@
-# [Advent of Code](https://adventofcode.com/) Solutions
+# [Advent of Code](https://adventofcode.com/) JavaScript Solutions
 
-Solutions are in the appropriate year folder.
+Solutions are in the appropriate year/day directory.
 
-To run a solution run `npm run start year day [parts]` or `node index.js year day [parts]`.
+To run a solution run `npm start year day [parts]` or `node index.js year day [parts]`.
 
 ```sh
 > npm start 2020 1
