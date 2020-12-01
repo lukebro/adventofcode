@@ -1,0 +1,9 @@
+{
+    "private": true,
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "author": "Lukasz Brodowski <lukebrodowski@gmail.com>",
+    "license": "MIT"
+}
