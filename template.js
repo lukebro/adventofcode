@@ -8,5 +8,5 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input
+    input,
 };

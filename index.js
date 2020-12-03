@@ -39,10 +39,15 @@ for (let part of parts) {
     try {
         solver = require(path.join(dir, `part${part}.js`));
     } catch (e) {
-        break;
+        if (e.code == 'MODULE_NOT_FOUND') {
+            break;
+        }
+
+        throw e;
     }
 
     let parsedInput = (solver.input && solver.input(input)) || input;
+
     let answer = solver.solve(parsedInput);
 
     console.log(`[Part ${part}]: ${answer}`);

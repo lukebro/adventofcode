@@ -13,7 +13,6 @@ function solve(input) {
             floor--;
         }
 
-
         if (floor === -1) {
             position = i + 1;
             break;
@@ -25,5 +24,5 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input
+    input,
 };

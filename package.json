@@ -3,7 +3,7 @@
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
-        "lint": "prettier --write \"**/*.js\""
+        "lint": "prettier --single-quote --tab-width=4 --write \"**/*.js\""
     },
     "author": "Lukasz Brodowski <lukebrodowski@gmail.com>",
     "license": "MIT",
