@@ -8,9 +8,7 @@
     "author": "Lukasz Brodowski <lukebrodowski@gmail.com>",
     "license": "MIT",
     "dependencies": {
-        "collections": "^5.1.12"
-    },
-    "devDependencies": {
+        "collections": "^5.1.12",
         "prettier": "^2.2.1"
     }
 }
