@@ -20,7 +20,7 @@ function solve(input) {
             continue;
         }
 
-        let repeated = /([a-z])\1+/.test(str);
+        let repeated = /([a-z])\1/.test(str);
 
         if (!repeated) {
             continue;
