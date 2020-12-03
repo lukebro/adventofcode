@@ -8,17 +8,26 @@ function solve(input) {
     let nice = 0;
 
     for (let str of input) {
-        let matches = str.match(/(([a-z])\1{2})/);
-
-        console.log(matches);
+        let matches = str.match(/([a-z])\1+/);
 
         if (!matches) {
             continue;
         }
 
-        let notContain = bad.filter((a) => str.includes(a)).length;
+        let [double] = matches;
 
-        if (notContain > 0) {
+
+        let nextMatch = str.match(new RegExp(double + '.*' + double));
+
+        if (!nextMatch) {
+            continue;
+        }
+
+        let finalMatch = str.match(/([a-z]).*\1/);
+
+        console.log(finalMatch);
+        
+        if (!str.match(/([a-z])(.*){1,}\1/)) {
             continue;
         }
 
