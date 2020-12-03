@@ -3,7 +3,7 @@ function input(lines) {
 }
 
 function solve(input) {
-    return input;
+    return null;
 }
 
 module.exports = {
