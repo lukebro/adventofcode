@@ -9,6 +9,7 @@
     "license": "MIT",
     "dependencies": {
         "collections": "^5.1.12",
+        "lodash": "^4.17.20",
         "prettier": "^2.2.1"
     }
 }
