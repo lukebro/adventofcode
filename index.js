@@ -48,6 +48,10 @@ for (let part of parts) {
 
     let answer = solver.solve(parsedInput);
 
+    if (typeof answer === 'object') {
+        answer = JSON.stringify(answer, null, 4);
+    }
+
     console.log(`[Part ${part}]: ${answer}`);
 }
 
