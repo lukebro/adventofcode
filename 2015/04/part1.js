@@ -1,9 +1,5 @@
 const crypto = require('crypto');
 
-function input(lines) {
-    return lines[0];
-}
-
 function solve(input) {
     let answer = 0;
 
@@ -24,6 +20,5 @@ function solve(input) {
 }
 
 module.exports = {
-    solve,
-    input,
+    solve
 };

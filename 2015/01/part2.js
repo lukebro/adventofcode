@@ -1,7 +1,3 @@
-function input(lines) {
-    return lines[0];
-}
-
 function solve(input) {
     let floor = 0;
     let position;
@@ -24,5 +20,4 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input,
 };

@@ -24,10 +24,7 @@ let input;
 
 try {
     input = fs
-        .readFileSync(path.join(dir, 'input.txt'), 'utf8')
-        .split('\n')
-        .map((str) => str.replace(/\r$/, ''))
-        .filter((str) => str.length > 0);
+        .readFileSync(path.join(dir, 'input.txt'), 'utf8');
 } catch (e) {
     console.error(`Error: Cannot find input for year ${year} day ${day}.`);
     return;
@@ -46,7 +43,7 @@ for (let part of parts) {
         throw e;
     }
 
-    let parsedInput = (solver.input && solver.input(input)) || input;
+    let parsedInput = (solver.input && solver.parse(input)) || input;
 
     let answer = solver.solve(parsedInput);
 

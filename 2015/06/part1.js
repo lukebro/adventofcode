@@ -1,5 +1,5 @@
-function input(lines) {
-    return lines.map((line) => {
+function parse(input) {
+    return input.split('\n').map((line) => {
         let [, action, x1, y1, x2, y2] = line.match(
             /(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)/,
         );
@@ -37,5 +37,5 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input,
+    parse,
 };

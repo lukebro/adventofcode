@@ -1,7 +1,7 @@
-function input(lines) {
+function parse(lines) {
     let rows = [];
 
-    lines.forEach((line) => {
+    lines.split('\n').forEach((line) => {
         rows.push([...line]);
     });
 
@@ -39,5 +39,5 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input,
+    parse,
 };

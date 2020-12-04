@@ -1,7 +1,7 @@
-function input(lines) {
+function parse(lines) {
     const matcher = /(\d+)x(\d+)x(\d+)/;
 
-    return lines.map((line) => {
+    return lines.split('\n').map((line) => {
         let [, l, w, h] = line.match(matcher);
 
         return { l: parseInt(l), w: parseInt(w), h: parseInt(h) };
@@ -25,5 +25,5 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input,
+    parse,
 };

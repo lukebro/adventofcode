@@ -1,5 +1,7 @@
-function input(lines) {
-    return lines;
+function parse(input) {
+    input = input.split('\n');
+
+    return input;
 }
 
 function solve(input) {
@@ -8,5 +10,5 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input,
+    parse,
 };

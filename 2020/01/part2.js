@@ -22,5 +22,5 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input: (s) => s.map(Number),
+    parse: (s) => s.split('\n').map(Number),
 };

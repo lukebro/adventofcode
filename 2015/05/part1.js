@@ -1,5 +1,5 @@
-function input(lines) {
-    return lines;
+function parse(input) {
+    return input.split('\n');
 }
 
 function solve(input) {
@@ -40,5 +40,5 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input,
+    parse,
 };

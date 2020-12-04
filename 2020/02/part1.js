@@ -1,7 +1,7 @@
-function input(lines) {
+function parse(lines) {
     const matcher = /(\d+)-(\d+) (.): (.*)/;
 
-    return lines.map((line) => {
+    return lines.split('\n').map((line) => {
         let [, min, max, char, password] = line.match(matcher);
 
         return { min: parseInt(min), max: parseInt(max), char, password };
@@ -20,5 +20,5 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input,
+    parse
 };

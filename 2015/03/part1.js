@@ -1,7 +1,3 @@
-function input(lines) {
-    return lines[0];
-}
-
 function solve(input) {
     let grid = {};
     let x = 0;
@@ -38,5 +34,4 @@ function solve(input) {
 
 module.exports = {
     solve,
-    input,
 };
