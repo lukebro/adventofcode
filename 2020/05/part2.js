@@ -48,10 +48,8 @@ function solve(input) {
         seats.push(row * 8 + col);
     }
 
-
-    seats = seats.sort((a,b) => a - b);
+    seats = seats.sort((a, b) => a - b);
     let mySeat = null;
-
 
     for (let i = 1; i < seats.length - 1; i++) {
         let cur = seats[i];

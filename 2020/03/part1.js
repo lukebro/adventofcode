@@ -26,7 +26,6 @@ function solve(input) {
         if (input[y][x % maxX] === '#') {
             count++;
         }
-
     }
 
     return count;

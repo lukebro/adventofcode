@@ -1,7 +1,7 @@
 function parse(input) {
     return input.split('\n').map((line) => {
         let [, action, x1, y1, x2, y2] = line.match(
-            /(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)/,
+            /(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)/
         );
 
         return [action, parseInt(x1), parseInt(y1), parseInt(x2), parseInt(y2)];

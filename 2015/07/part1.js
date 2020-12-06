@@ -2,7 +2,6 @@ function isNum(s) {
     return /[0-9+]/.test(s);
 }
 
-
 // i had help solving this one..
 // i parsed and wrote the regex out but after getting stuck
 // and seeing the answer... i couldn't unsee it :(
@@ -12,7 +11,7 @@ function parse(input) {
 
     return input.reduce((wires, i) => {
         let [, a, b, c, d] = i.match(
-            /([a-z0-9]*?)\s?([NOT|AND|OR|LSHIFT|RSHIFT]*)\s?([a-z0-9]+) -> ([a-z0-9]+)$/,
+            /([a-z0-9]*?)\s?([NOT|AND|OR|LSHIFT|RSHIFT]*)\s?([a-z0-9]+) -> ([a-z0-9]+)$/
         );
 
         let out = d || null;
@@ -72,7 +71,6 @@ function solve(wires) {
 
     while (Object.keys(solved).length < total) {
         for (let wire in wires) {
-
             if (wire in solved) continue;
 
             let solution = solveWire(solved, ...wires[wire]);

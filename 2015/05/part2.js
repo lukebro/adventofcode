@@ -8,7 +8,6 @@ function solve(input) {
     let nice = 0;
 
     for (let str of input) {
-        
         if (!str.match(/([a-z]{2}).*\1/)) {
             continue;
         }
