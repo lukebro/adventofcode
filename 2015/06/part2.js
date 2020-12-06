@@ -28,7 +28,6 @@ const turn = (grid, action, x1, y1, x2, y2) => {
 
 function solve(input) {
     let grid = [];
-    let lit = 0;
 
     for (let instruction of input) {
         turn(grid, ...instruction);
