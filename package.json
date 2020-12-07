@@ -2,14 +2,8 @@
     "private": true,
     "main": "index.js",
     "scripts": {
-        "start": "node index.js",
-        "lint": "prettier --single-quote --tab-width=4 --write \"**/*.js\""
+        "start": "node index.js"
     },
     "author": "Lukasz Brodowski <lukebrodowski@gmail.com>",
-    "license": "MIT",
-    "dependencies": {
-        "collections": "^5.1.12",
-        "lodash": "^4.17.20",
-        "prettier": "^2.2.1"
-    }
+    "license": "MIT"
 }
