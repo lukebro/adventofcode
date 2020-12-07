@@ -14,7 +14,7 @@ if (!year || !day) {
     return;
 }
 
-console.log(`\nYear: ${year} Day: ${day}`);
+console.log(`Year: ${year} Day: ${day}`);
 
 // default to part 1 and 2
 parts = parts ? parts.split(',').map(Number) : [1, 2];
@@ -44,9 +44,15 @@ for (let part of parts) {
         throw e;
     }
 
-    let parsedInput = (solver.parse && solver.parse(input)) || input;
+    let answer;
 
-    let answer = solver.solve(parsedInput);
+    if (typeof solver === 'function') {
+        answer = solver(input);
+    } else {
+        let parsedInput = (solver.parse && solver.parse(input)) || input;
+
+        answer = solver.solve(parsedInput);
+    }
 
     if (typeof answer === 'object') {
         answer = JSON.stringify(answer, null, 4);

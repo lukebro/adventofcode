@@ -1,14 +1,5 @@
-function parse(input) {
-    input = input.split('\n');
+module.exports = (file) => {
+    let lines = file.split('\n');
 
-    return input;
-}
-
-function solve(input) {
     return null;
-}
-
-module.exports = {
-    solve,
-    parse,
 };
