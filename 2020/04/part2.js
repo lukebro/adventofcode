@@ -1,11 +1,11 @@
-const _ = require('lodash');
+const { difference, findall } = require('../../utils');
 
 function parse(lines) {
     return lines.split('\n\n').map((l) => {
-        let matches = [...l.matchAll(/(\w{3}):(\S+)/g)];
+        let matches = findall(/(\w{3}):(\S+)/g, l);
 
         return matches.reduce((c, m) => {
-            c[m[1]] = m[2];
+            c[m[0]] = m[1];
 
             return c;
         }, {});
@@ -19,7 +19,7 @@ function solve(passports) {
 
     for (let passport of passports) {
         let keys = Object.keys(passport);
-        let diff = _.difference(REQUIRED_VALUES, keys);
+        let diff = difference(REQUIRED_VALUES, keys);
 
         if (diff.length !== 0) {
             continue;
