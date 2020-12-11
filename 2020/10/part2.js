@@ -6,33 +6,35 @@ module.exports = (file) => {
 
     lines.push(lines[lines.length - 1] + 3);
 
-    let perms = 0;
+    let memo = {};
 
+    process.on('exit', () => console.log(memo));
+
+
+    // m is the last number we're comparing
+    // arr is the subset of unchosen permutation paths
     let find = (arr, m) => {
-        if (perms === Number.MAX_VALUE - 1000) {
-            console.log("MAX HIT");
-            process.exit();
-        }
         if (arr.length === 1) {
-            m = m.slice();
-            m.push(arr[0]);
+            return 1;
+        }
 
-            perms++;
-            return;
+
+        if (memo[arr.length + ':' + m]) {
+            return memo[arr.length + ':' + m];
         }
 
         let d = 0;
-        while (arr[d] - m[m.length - 1] <= 3) {
-            let nextM = m.slice();
-            nextM.push(arr[d]);
+        let sum = 0;
 
-            find(arr.slice(d + 1), nextM);
-
+        while (arr[d] - m <= 3) {
+            sum += find(arr.slice(d + 1), arr[d]);
             d++;
         }
+
+        memo[arr.length + ':' + m] = sum;
+
+        return sum;
     };
 
-    find(lines, [0]);
-
-    return perms;
+    return find(lines, 0);
 };
