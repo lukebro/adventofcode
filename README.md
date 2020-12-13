@@ -2,14 +2,37 @@
 
 Solutions are in the appropriate year/day directory.
 
-To run a solution run `npm start year day [parts]` or `node index.js year day [parts]`.
+To run a solution run `npm start year [day] [parts]` or `node index.js year [day] [parts]`.
+
+If only a year is provided, all days will run sequentially.
 
 ```sh
 > npm start 2020 1
 
-Year: 2020 Day: 1
-[Part 1]: 1016131
-[Part 2]: 276432018
+Advent of Code
+Year: 2020
+
+   Day: 01
+Part 1: 1016131 in 1ms
+Part 2: 276432018 in 6ms
+
+```
+
+```sh
+> npm start 2020
+
+Advent of Code
+Year: 2020
+
+   Day: 01
+Part 1: 1016131 in 1ms
+Part 2: 276432018 in 6ms
+
+   Day: 02
+Part 1: 550 in 2ms
+Part 2: 634 in 1ms
+
+# ...continued for all days
 
 ```
 
@@ -18,13 +41,10 @@ The parts argument can be a comma seperated list of numbers. Omitting it runs pa
 ```sh
 > npm start 2020 1 2
 
-Year: 2020 Day: 1
-[Part 2]: 276432018
+Advent of Code
+Year: 2020
 
-> npm start 2020 1 1,2
-
-Year: 2020 Day: 1
-[Part 1]: 1016131
-[Part 2]: 276432018
+   Day: 1
+Part 2: 276432018 in 6ms
 
 ```
