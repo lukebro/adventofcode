@@ -1,3 +1,5 @@
+const { crt } = require('../../utils');
+
 module.exports = (file) => {
     let lines = file.split('\n');
     let busIds = lines[1].split(',').map((x) => (x === 'x' ? x : BigInt(x)));
@@ -22,43 +24,8 @@ module.exports = (file) => {
         mods.push(id);
     }
 
-    const modulo_inverse = (a, b) => {
-        let b0 = b;
-        let x0 = 0n;
-        let x1 = 1n;
+    // edit after contest, moved crt + mod_inverse into utils
+    // for future puzzles
 
-        if (b === 1n) return 1n;
-
-        while (a > 1n) {
-            let q = a / b;
-            let temp = a;
-            a = b;
-            b = temp % b;
-            temp = x0;
-            x0 = x1 - q * x0;
-            x1 = temp;
-        }
-
-        if (x1 < 0n) {
-            x1 += b0;
-        }
-
-        return x1;
-    };
-
-    // http://rosettacode.org/wiki/Chinese_remainder_theorem
-    // where n = list of mods and a is list of remainders
-    const chinese_remainder = (n, a) => {
-        let prod = n.reduce((a, c) => a * c, 1n);
-        let sum = 0n;
-
-        for (let i = 0; i < n.length; i++) {
-            let p = prod / n[i];
-            sum += a[i] * modulo_inverse(p, n[i]) * p;
-        }
-
-        return sum % prod;
-    };
-
-    return chinese_remainder(mods, remainders);
+    return crt(mods, remainders);
 };
