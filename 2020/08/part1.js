@@ -32,7 +32,7 @@ module.exports = (file) => {
     let lines = file.split('\n');
 
     let ins = lines.map((l) => {
-        let [matches] = findall(/(nop|acc|jmp) (\+|\-)(\d+)/g, l);
+        let matches = findall(/(nop|acc|jmp) (\+|\-)(\d+)/g, l);
 
         let [op, sign, arg] = matches;
 

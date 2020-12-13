@@ -14,13 +14,16 @@ exports.findall = (regex, str) => {
 
     while ((match = regex.exec(str)) !== null) {
         let results = match.length === 1 ? match : match.splice(1);
-
         // if we have only one capture group
         if (results.length === 1) {
             hits.push(results[0]);
         } else {
             hits.push(results);
         }
+    }
+
+    if (hits.length === 1) {
+        return hits[0];
     }
 
     return hits;
