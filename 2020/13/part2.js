@@ -47,7 +47,7 @@ module.exports = (file) => {
     };
 
     // http://rosettacode.org/wiki/Chinese_remainder_theorem
-    // where m = list of mods and a is list of remainders
+    // where n = list of mods and a is list of remainders
     const chinese_remainder = (n, a) => {
         let prod = n.reduce((a, c) => a * c, 1n);
         let sum = 0n;
