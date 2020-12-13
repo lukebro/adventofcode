@@ -1,4 +1,4 @@
-function solve(input) {
+module.exports = (input) => {
     let grid = {};
     let x = 0;
     let y = 0;
@@ -30,8 +30,4 @@ function solve(input) {
     }
 
     return visits;
-}
-
-module.exports = {
-    solve,
 };

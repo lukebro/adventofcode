@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-function solve(input) {
+module.exports = (input) => {
     let answer = 0;
 
     while (1) {
@@ -17,8 +17,4 @@ function solve(input) {
     }
 
     return answer;
-}
-
-module.exports = {
-    solve,
 };

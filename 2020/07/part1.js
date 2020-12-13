@@ -1,7 +1,5 @@
-function parse(input) {
-    input = input.split('\n');
-
-    return input.reduce((bags, i) => {
+module.exports = (lines) => {
+    const bags = lines.split('\n').reduce((bags, i) => {
         let matches = i.match(/(\d )?\w+ (\w+) bag/g);
 
         matches = matches.map((i) => {
@@ -23,9 +21,7 @@ function parse(input) {
 
         return bags;
     }, {});
-}
 
-function solve(bags) {
     let hasGold = (color) => {
         if (!bags[color]) {
             return false;
@@ -53,9 +49,4 @@ function solve(bags) {
     }
 
     return shinyGold;
-}
-
-module.exports = {
-    solve,
-    parse,
 };

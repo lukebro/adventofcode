@@ -1,8 +1,5 @@
-function parse(input) {
-    return input.split('\n');
-}
-
-function solve(input) {
+module.exports = (input) => {
+    input = input.split('\n');
     let v = ['a', 'e', 'i', 'o', 'u'];
     let bad = ['ab', 'cd', 'pq', 'xy'];
     let nice = 0;
@@ -36,9 +33,4 @@ function solve(input) {
     }
 
     return nice;
-}
-
-module.exports = {
-    solve,
-    parse,
 };

@@ -1,13 +1,3 @@
-function parse(input) {
-    return input.split('\n').map((line) => {
-        let [, action, x1, y1, x2, y2] = line.match(
-            /(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)/
-        );
-
-        return [action, parseInt(x1), parseInt(y1), parseInt(x2), parseInt(y2)];
-    });
-}
-
 const turn = (grid, action, x1, y1, x2, y2) => {
     for (let y = y1; y <= y2; y++) {
         for (let x = x1; x <= x2; x++) {
@@ -24,7 +14,15 @@ const turn = (grid, action, x1, y1, x2, y2) => {
     }
 };
 
-function solve(input) {
+module.exports = (input) => {
+    input = input.split('\n').map((line) => {
+        let [, action, x1, y1, x2, y2] = line.match(
+            /(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)/,
+        );
+
+        return [action, parseInt(x1), parseInt(y1), parseInt(x2), parseInt(y2)];
+    });
+
     let grid = [];
 
     for (let instruction of input) {
@@ -32,9 +30,4 @@ function solve(input) {
     }
 
     return grid.reduce((t, x) => t + x, 0);
-}
-
-module.exports = {
-    solve,
-    parse,
 };

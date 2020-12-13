@@ -1,10 +1,5 @@
-function parse(input) {
-    input = input.split('\n\n');
-
-    return input.map((i) => i.split('\n'));
-}
-
-function solve(input) {
+module.exports = (input) => {
+    input = input.split('\n\n').map((i) => i.split('\n'));
     let total = 0;
 
     for (let group of input) {
@@ -20,9 +15,4 @@ function solve(input) {
     }
 
     return total;
-}
-
-module.exports = {
-    solve,
-    parse,
 };

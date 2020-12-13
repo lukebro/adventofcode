@@ -1,14 +1,11 @@
-function parse(lines) {
+module.exports = (lines) => {
     const matcher = /(\d+)x(\d+)x(\d+)/;
 
-    return lines.split('\n').map((line) => {
+    const input = lines.split('\n').map((line) => {
         let [, l, w, h] = line.match(matcher);
 
         return { l: parseInt(l), w: parseInt(w), h: parseInt(h) };
     });
-}
-
-function solve(input) {
     let ribbon = 0;
 
     input.forEach((pkg) => {
@@ -20,9 +17,4 @@ function solve(input) {
     });
 
     return ribbon;
-}
-
-module.exports = {
-    solve,
-    parse,
 };

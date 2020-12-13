@@ -1,14 +1,10 @@
-function parse(input) {
-    input = input.split('\n');
-
-    return input.map((i) => {
+module.exports = (input) => {
+    input = input.split('\n').map((i) => {
         let [, r, c] = i.match(/^([FB]{7})([LR]{3})$/);
 
         return [r, c];
     });
-}
 
-function solve(input) {
     let seats = [];
 
     for (let seat of input) {
@@ -49,9 +45,4 @@ function solve(input) {
     }
 
     return Math.max(...seats);
-}
-
-module.exports = {
-    solve,
-    parse,
 };

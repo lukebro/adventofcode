@@ -8,9 +8,6 @@ module.exports = (file) => {
 
     let memo = {};
 
-    process.on('exit', () => console.log(memo));
-
-
     // m is the last number we're comparing
     // arr is the subset of unchosen permutation paths
     let find = (arr, m) => {

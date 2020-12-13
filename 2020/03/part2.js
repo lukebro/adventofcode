@@ -1,13 +1,3 @@
-function parse(lines) {
-    let rows = [];
-
-    lines.split('\n').forEach((line) => {
-        rows.push([...line]);
-    });
-
-    return rows;
-}
-
 const walk = (map) => (xr, yr) => {
     let maxY = map.length;
     let maxX = map[0].length;
@@ -31,13 +21,14 @@ const walk = (map) => (xr, yr) => {
     return count;
 };
 
-function solve(input) {
+module.exports = (lines) => {
+    let input = [];
+
+    lines.split('\n').forEach((line) => {
+        input.push([...line]);
+    });
+
     let s = walk(input);
 
     return s(1, 1) * s(3, 1) * s(5, 1) * s(7, 1) * s(1, 2);
-}
-
-module.exports = {
-    solve,
-    parse,
 };

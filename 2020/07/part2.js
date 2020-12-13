@@ -1,7 +1,5 @@
-function parse(input) {
-    input = input.split('\n');
-
-    return input.reduce((bags, i) => {
+module.exports = (lines) => {
+    const bags = lines.split('\n').reduce((bags, i) => {
         let matches = i.match(/(\d )?\w+ (\w+) bag/g);
 
         matches = matches.map((i) => {
@@ -23,9 +21,6 @@ function parse(input) {
 
         return bags;
     }, {});
-}
-
-function solve(bags) {
     let count = 0;
 
     let gold = bags['shiny gold'];
@@ -41,9 +36,4 @@ function solve(bags) {
     countThem(gold, 1);
 
     return count;
-}
-
-module.exports = {
-    solve,
-    parse,
 };

@@ -28,3 +28,11 @@ exports.findall = (regex, str) => {
 
     return hits;
 };
+
+exports.pad = (str, length, char = '0') => {
+    while (str.length < length) {
+        str = char + str;
+    }
+
+    return str;
+};

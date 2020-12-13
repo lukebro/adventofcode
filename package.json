@@ -5,5 +5,8 @@
         "start": "node index.js"
     },
     "author": "Lukasz Brodowski <lukebrodowski@gmail.com>",
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+        "chalk": "^4.1.0"
+    }
 }

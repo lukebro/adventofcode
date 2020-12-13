@@ -1,7 +1,8 @@
 const { difference, findall } = require('../../utils');
+const REQUIRED_VALUES = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
 
-function parse(lines) {
-    return lines.split('\n\n').map((l) => {
+module.exports = (lines) => {
+    const passports = lines.split('\n\n').map((l) => {
         let matches = findall(/(\w{3}):(\S+)/g, l);
 
         return matches.reduce((c, m) => {
@@ -10,11 +11,6 @@ function parse(lines) {
             return c;
         }, {});
     });
-}
-
-const REQUIRED_VALUES = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
-
-function solve(passports) {
     let valid = 0;
 
     for (let passport of passports) {
@@ -109,9 +105,4 @@ function solve(passports) {
     }
 
     return valid;
-}
-
-module.exports = {
-    solve,
-    parse,
 };

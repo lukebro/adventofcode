@@ -1,4 +1,5 @@
-function solve(input) {
+module.exports = (input) => {
+    input = input.split('\n').map(Number);
     let answer;
 
     // find sum of two numbers that add up
@@ -19,8 +20,3 @@ function solve(input) {
 
     return answer;
 }
-
-module.exports = {
-    solve,
-    parse: (s) => s.split('\n').map(Number),
-};

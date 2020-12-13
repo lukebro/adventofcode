@@ -1,4 +1,6 @@
-function solve(input) {
+module.exports = (input) => {
+    input = input.split('\n').map(Number);
+
     let answer;
 
     for (let i = 0; i < input.length; i++) {
@@ -15,9 +17,4 @@ function solve(input) {
     }
 
     return answer;
-}
-
-module.exports = {
-    solve,
-    parse: (s) => s.split('\n').map(Number),
 };

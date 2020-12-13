@@ -1,4 +1,4 @@
-function solve(input) {
+module.exports = (input) => {
     let floor = 0;
 
     for (let i = 0; i < input.length; i++) {
@@ -10,8 +10,4 @@ function solve(input) {
     }
 
     return floor;
-}
-
-module.exports = {
-    solve,
 };

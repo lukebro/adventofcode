@@ -6,33 +6,6 @@ function isNum(s) {
 // i parsed and wrote the regex out but after getting stuck
 // and seeing the answer... i couldn't unsee it :(
 
-function parse(input) {
-    input = input.split('\n');
-
-    return input.reduce((wires, i) => {
-        let [, a, b, c, d] = i.match(
-            /([a-z0-9]*?)\s?([NOT|AND|OR|LSHIFT|RSHIFT]*)\s?([a-z0-9]+) -> ([a-z0-9]+)$/
-        );
-
-        let out = d || null;
-        let op = b || null;
-        let right = c || null;
-        let left = null;
-
-        if (op) {
-            left = a || null;
-        }
-
-        // convert to num
-        if (isNum(left)) left = +left;
-        if (isNum(right)) right = +right;
-
-        wires[out] = [op, left, right];
-
-        return wires;
-    }, {});
-}
-
 function solveWire(solved, op, left, right) {
     if (typeof left == 'string')
         if (left in solved) left = solved[left];
@@ -65,7 +38,30 @@ function solveWire(solved, op, left, right) {
     return right;
 }
 
-function solve(wires) {
+module.exports = (lines) => {
+    const wires = lines.split('\n').reduce((wires, i) => {
+        let [, a, b, c, d] = i.match(
+            /([a-z0-9]*?)\s?([NOT|AND|OR|LSHIFT|RSHIFT]*)\s?([a-z0-9]+) -> ([a-z0-9]+)$/,
+        );
+
+        let out = d || null;
+        let op = b || null;
+        let right = c || null;
+        let left = null;
+
+        if (op) {
+            left = a || null;
+        }
+
+        // convert to num
+        if (isNum(left)) left = +left;
+        if (isNum(right)) right = +right;
+
+        wires[out] = [op, left, right];
+
+        return wires;
+    }, {});
+
     let total = Object.keys(wires).length;
     let solved = {};
 
@@ -82,9 +78,4 @@ function solve(wires) {
     }
 
     return solved.a;
-}
-
-module.exports = {
-    solve,
-    parse,
 };

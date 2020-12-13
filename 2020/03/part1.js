@@ -1,14 +1,10 @@
-function parse(lines) {
-    let rows = [];
+module.exports = (lines) => {
+    let input = [];
 
     lines.split('\n').forEach((line) => {
-        rows.push([...line]);
+        input.push([...line]);
     });
 
-    return rows;
-}
-
-function solve(input) {
     let maxY = input.length;
     let maxX = input[0].length;
     let count = 0;
@@ -29,9 +25,4 @@ function solve(input) {
     }
 
     return count;
-}
-
-module.exports = {
-    solve,
-    parse,
 };
