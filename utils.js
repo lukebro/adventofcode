@@ -1,3 +1,5 @@
+const { performance } = require('perf_hooks');
+
 exports.difference = (a, b) => {
     b = Array.from(b);
 
@@ -74,4 +76,29 @@ exports.crt = (n, a) => {
     }
 
     return sum % prod;
+};
+
+/**
+ * For long running calculations, this is useful
+ * to monitor a value every (x) seconds.  Tick needs
+ * to be manually called in the loop since the event loop
+ * will be blocked :(
+ */
+let uniqId = 0;
+exports.observe = (timeInSec = 5) => {
+    let time = performance.now();
+    let sleep = timeInSec * 1000;
+    let id = ++uniqId;
+
+    console.log(`[${id}] Observing every ${timeInSec} seconds`);
+
+    let tick = (value) => {
+        let now = performance.now();
+        if (now - time < sleep) return;
+
+        time = now;
+        console.log(`[${id}] Observed: ${JSON.stringify(value, null, 4)}`);
+    };
+
+    return tick;
 };

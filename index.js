@@ -76,7 +76,7 @@ for (let i = 0; i < days.length; i++) {
         }
 
         const start = performance.now();
-        const answer = solver(input);
+        let answer = solver(input);
         const end = performance.now();
         const time = Math.round(end - start);
 
