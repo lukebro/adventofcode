@@ -34,10 +34,9 @@ let jolly = (x) =>
         .map((c, i) => (i % 2 ? chalk.green(c) : chalk.red(c)))
         .join('');
 
-let title = jolly(`Year: `);
-let dYear = jolly(year);
-console.log(jolly('Advent of Code'));
-console.log(`${title}${chalk.bold(dYear)}\n`);
+let title = 'Advent of Code';
+console.log(jolly(title));
+console.log(`${chalk.bold(jolly(pad(year, title.length, ' ')))}\n`);
 
 // default to part 1 and 2
 // @TODO there is only ever two parts, so hardcoded is ok
@@ -58,7 +57,7 @@ for (let i = 0; i < days.length; i++) {
             .readFileSync(path.join(dir, 'input.txt'), 'utf8')
             .replace(/[\r]/g, '');
     } catch (e) {
-        console.error(`Error: Cannot find input for year ${year} day ${day}.`);
+        console.error(chalk.red(`Cannot find input for year ${year} day ${day}.`));
         continue;
     }
 
@@ -72,21 +71,14 @@ for (let i = 0; i < days.length; i++) {
                 break;
             }
 
-            console.error(e);
+            console.error(chalk.red(e));
             continue;
         }
 
-        let answer;
-
-        let start = performance.now();
-        if (typeof solver === 'function') {
-            answer = solver(input);
-        } else {
-            let parsedInput = (solver.parse && solver.parse(input)) || input;
-            answer = solver.solve(parsedInput);
-        }
-        let end = performance.now();
-        let time = Math.round(end - start);
+        const start = performance.now();
+        const answer = solver(input);
+        const end = performance.now();
+        const time = Math.round(end - start);
 
         if (typeof answer === 'object') {
             answer = JSON.stringify(answer, null, 4);

@@ -10,7 +10,7 @@ If only a year is provided, all days will run sequentially.
 > npm start 2020 1
 
 Advent of Code
-Year: 2020
+          2020
 
    Day: 01
 Part 1: 1016131 in 1ms
@@ -22,7 +22,7 @@ Part 2: 276432018 in 6ms
 > npm start 2020
 
 Advent of Code
-Year: 2020
+          2020
 
    Day: 01
 Part 1: 1016131 in 1ms
@@ -42,7 +42,7 @@ The parts argument can be a comma seperated list of numbers. Omitting it runs pa
 > npm start 2020 1 2
 
 Advent of Code
-Year: 2020
+          2020
 
    Day: 1
 Part 2: 276432018 in 6ms
