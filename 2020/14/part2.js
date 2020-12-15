@@ -1,4 +1,5 @@
-// wrong answer: 154926388310329
+const { pad } = require('../../utils');
+
 module.exports = (file) => {
     let lines = file.split('\n');
     let fullmask;
@@ -30,18 +31,18 @@ module.exports = (file) => {
         }
 
         let [, mem, value] = line.match(/mem\[(\d+)\] = (\d+)/);
-        value = BigInt(value);
+        value = Number(value);
         mem = BigInt(mem);
 
         let addresses = new Set();
-        let strValue = mem.toString(2).split('');
         let maskLength = fullmask.length;
+        let strValue = pad(mem.toString(2), maskLength, '0').split('');
         let floating = [];
 
         // we do the initial mask for 1s, keeping
         // track of where the floating bits are
-        for (let i = strValue.length - 1; i >= 0; i--) {
-            let m = fullmask[maskLength - (strValue.length - i)];
+        for (let i = maskLength - 1; i >= 0; i--) {
+            let m = fullmask[i];
 
             if (m === '0') {
                 continue;
@@ -55,37 +56,25 @@ module.exports = (file) => {
         const permute = (float, str) => {
             if (float.length === 0) return;
 
-            for (let i = 0; i < float.length; i++) {
-                let arr = float.slice();
-                let static = arr.splice(i, 1);
+            let arr = float.slice();
+            let static = arr.shift();
 
-                let one = replace(str, static, '0');
-                let two = replace(str, static, '1');
+            let one = replace(str, static, '0');
+            let two = replace(str, static, '1');
 
-                addresses.add(one).add(two);
+            addresses.add(one).add(two);
 
-                permute(arr, one);
-                permute(arr, two);
-            }
+            permute(arr, one);
+            permute(arr, two);
         };
 
         permute(floating, strValue.join(''));
 
-        console.log(addresses);
-
-        addresses = Array.from(addresses).map(x => BigInt(parseInt(x, 2)));
-
-        console.log(addresses);
+        addresses = Array.from(addresses).map((x) => parseInt(x, 2));
 
         for (let address of addresses) {
-            if (registers[address]) {
-                console.log("already set", address, registers[address]);
-            }
-            registers[address] = mask(value);
+            registers[address] = value;
         }
-
-        console.log('\n');
     }
-    console.log(registers);
-    return Object.values(registers).reduce((a, c) => a + c, 0n);
+    return Object.values(registers).reduce((a, c) => a + c, 0);
 };
