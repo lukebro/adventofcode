@@ -2,8 +2,8 @@ const { pad } = require('../../utils');
 
 module.exports = (file) => {
     let lines = file.split('\n');
-    let fullmask;
     let registers = {};
+    let fullmask;
 
     // strings are immutable in js :(
     const replace = (str, index, value) => {
