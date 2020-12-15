@@ -3,13 +3,7 @@ const { pad } = require('../../utils');
 module.exports = (file) => {
     let lines = file.split('\n');
     let fullmask;
-    let andMask;
-    let orMask;
     let registers = {};
-
-    const mask = (value) => {
-        return (value | orMask) & andMask;
-    };
 
     // strings are immutable in js :(
     const replace = (str, index, value) => {
@@ -24,9 +18,6 @@ module.exports = (file) => {
 
         if (line.startsWith('mask')) {
             [, fullmask] = line.match(/mask = ([X10]+)/);
-            orMask = BigInt(parseInt(fullmask.replace(/X/g, '0'), 2));
-            andMask = BigInt(parseInt(fullmask.replace(/X/g, '1'), 2));
-
             continue;
         }
 
@@ -34,7 +25,7 @@ module.exports = (file) => {
         value = Number(value);
         mem = BigInt(mem);
 
-        let addresses = new Set();
+        let addresses = [];
         let maskLength = fullmask.length;
         let strValue = pad(mem.toString(2), maskLength, '0').split('');
         let floating = [];
@@ -62,7 +53,7 @@ module.exports = (file) => {
             let one = replace(str, static, '0');
             let two = replace(str, static, '1');
 
-            addresses.add(one).add(two);
+            addresses.push(one, two);
 
             permute(arr, one);
             permute(arr, two);
@@ -70,11 +61,10 @@ module.exports = (file) => {
 
         permute(floating, strValue.join(''));
 
-        addresses = Array.from(addresses).map((x) => parseInt(x, 2));
-
         for (let address of addresses) {
-            registers[address] = value;
+            registers[parseInt(address, 2)] = value;
         }
     }
+
     return Object.values(registers).reduce((a, c) => a + c, 0);
 };
