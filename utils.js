@@ -1,5 +1,27 @@
 const { performance } = require('perf_hooks');
 
+/**
+ * dict which allows for default value
+ */
+exports.dict = (defaultValue = undefined) => {
+    let isFn = typeof defaultValue === 'function';
+
+    return new Proxy(
+        {},
+        {
+            get: (target, name) => {
+                if (name in target) {
+                    return target[name];
+                }
+
+                if (isFn) return defaultValue();
+
+                return defaultValue;
+            },
+        },
+    );
+};
+
 exports.difference = (a, b) => {
     b = Array.from(b);
 
