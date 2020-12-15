@@ -13,7 +13,7 @@ module.exports = (file) => {
     let mask;
     let andMask;
     let orMask;
-    let registers = [];
+    let registers = {};
 
     for (let i = 0; i < lines.length; i++) {
         let line = lines[i];
@@ -32,5 +32,5 @@ module.exports = (file) => {
         registers[mem] = (value | orMask) & andMask;
     }
 
-    return registers.reduce((a, c) => a + c, 0n);
+    return Object.values(registers).reduce((a, c) => a + c, 0n);
 };
