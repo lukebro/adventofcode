@@ -14,9 +14,7 @@ exports.dict = (defaultValue = undefined) => {
                     return target[name];
                 }
 
-                if (isFn) return defaultValue();
-
-                return defaultValue;
+                return (target[name] = isFn ? defaultValue() : defaultValue);
             },
         },
     );
@@ -110,16 +108,23 @@ let uniqId = 0;
 exports.observe = (timeInSec = 5) => {
     let time = performance.now();
     let sleep = timeInSec * 1000;
+    let interval = 0;
     let id = ++uniqId;
 
-    console.log(`[${id}] Observing every ${timeInSec} seconds`);
+    console.log(`[${id}][0s] Observing every ${timeInSec} seconds`);
 
     let tick = (value) => {
         let now = performance.now();
         if (now - time < sleep) return;
-
+        interval += 1;
         time = now;
-        console.log(`[${id}] Observed: ${JSON.stringify(value, null, 4)}`);
+        console.log(
+            `[${id}][${interval * timeInSec}s] Observed: ${JSON.stringify(
+                value,
+                null,
+                4,
+            )}`,
+        );
     };
 
     return tick;
