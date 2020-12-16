@@ -1,4 +1,7 @@
 const { performance } = require('perf_hooks');
+const assert = require('assert');
+
+exports.assert = assert;
 
 exports.difference = (a, b) => {
     b = Array.from(b);
