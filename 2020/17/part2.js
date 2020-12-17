@@ -1,94 +1,8 @@
-const { assert } = require('../../utils');
-
-// Array factory
-const make = (size, contents) => {
-    return Array.from({ length: size }, contents);
-};
-
-/**
- * Expand grid by volume in all direction by an mount.
- *
- * This gets really messy in 4D because you need to make sure
- * you're creating new arrays every single time.  Perhaps representing
- * some tuple of Map(x,y,z,w) would be better rather than expanding the array out
- * like this... I made a mistake but I'm too far in.  In that case I wouldn't have
- * to expand my array out.
- */
-const expandGrid = (grid, by) => {
-    let size = Math.floor(by) * 2 + grid.length;
-
-    for (let w = 0; w < grid.length; w++) {
-        let zPlane = grid[w];
-
-        for (let z = 0; z < zPlane.length; z++) {
-            let yPlane = zPlane[z];
-
-            for (let y = 0; y < yPlane.length; y++) {
-                let zPlane = yPlane[y];
-
-                while (zPlane.length < size) {
-                    zPlane.unshift('.');
-                    zPlane.push('.');
-                }
-            }
-
-            while (yPlane.length < size) {
-                let xPlane = make(size, () => '.');
-
-                yPlane.unshift([...xPlane]);
-                yPlane.push([...xPlane]);
-            }
-        }
-
-        while (zPlane.length < size) {
-            let xPlane = make(size, () => '.');
-
-            zPlane.unshift([...make(size, () => [...xPlane])]);
-            zPlane.push([...make(size, () => [...xPlane])]);
-        }
-    }
-
-    while (grid.length < size) {
-        let xPlane = make(size, () => '.');
-        let zPlane1 = [];
-        let zPlane2 = [];
-
-        for (let n = 0; n < size; n++) {
-
-
-            // while (zPlane1.length < size) {
-                zPlane1.push([...make(size, () => [...xPlane])]);
-                zPlane2.push([...make(size, () => [...xPlane])]);
-            // }
-        }
-
-        grid.unshift(zPlane1);
-        grid.push(zPlane2);
-    }
-};
-
-/**
- * Deep clone grid.
- */
-const clone = (grid) => {
-    if (typeof grid !== 'object') return grid;
-
-    let next = [];
-
-    for (let layer in grid) {
-        let value = grid[layer];
-
-        next[layer] = clone(value);
-    }
-
-    return next;
-};
-
 /**
  * Get any neighbor at any point in space.
  */
 const neighbors = (grid, x0, y0, z0, w0) => {
-    let result = { '#': 0, '.': 0 };
+    let result = 0;
 
     for (let w = w0 - 1; w <= w0 + 1; w++) {
         for (let z = z0 - 1; z <= z0 + 1; z++) {
@@ -98,53 +12,55 @@ const neighbors = (grid, x0, y0, z0, w0) => {
                         continue;
                     }
 
-                    let wPlane = grid[w];
-                    let zPlane = wPlane && wPlane[z];
-                    let yPlane = zPlane && zPlane[y];
-                    let value = yPlane && yPlane[x];
+                    let value = grid.get(`${x},${y},${z},${w}`);
 
-                    if (value && value === '#') {
-                        result['#'] += 1;
-                    } else if (value && value === '.') {
-                        result['.'] += 1;
-                    } else {
-                        result['.'] += 1;
+                    if (value && value === 1) {
+                        result += 1;
                     }
                 }
             }
         }
     }
 
-    // we should always have 80 neighbors in a 4d grid
-    assert(result['#'] + result['.'] === 80);
-
     return result;
 };
 
-/**
- * Cycle the grid once.
- * Returns a new grid.
- */
 const cycle = (grid) => {
-    let next = clone(grid);
+    let next = new Map();
 
-    for (let w = 0; w < grid.length; w++) {
-        let zPlane = grid[w];
+    let xr = [0, 0];
+    let yr = [0, 0];
+    let zr = [0, 0];
+    let wr = [0, 0];
 
-        for (let z = 0; z < zPlane.length; z++) {
-            let yPlane = zPlane[z];
+    grid.forEach((value, cords) => {
+        let [x0, y0, z0, w0] = cords.split(',').map(Number);
 
-            for (let y = 0; y < yPlane.length; y++) {
-                let xPlane = yPlane[y];
+        xr[0] = Math.min(xr[0], x0);
+        xr[1] = Math.max(xr[1], x0);
 
-                for (let x = 0; x < xPlane.length; x++) {
-                    let value = xPlane[x];
+        yr[0] = Math.min(yr[0], y0);
+        yr[1] = Math.max(yr[1], y0);
+
+        zr[0] = Math.min(zr[0], z0);
+        zr[1] = Math.max(zr[1], z0);
+
+        wr[0] = Math.min(wr[0], w0);
+        wr[1] = Math.max(wr[1], w0);
+    });
+
+    for (let w = wr[0] - 2; w <= wr[1] + 2; w++) {
+        for (let z = zr[0] - 2; z <= zr[1] + 2; z++) {
+            for (let y = yr[0] - 2; y <= yr[1] + 2; y++) {
+                for (let x = xr[0] - 2; x <= xr[1] + 2; x++) {
                     let n = neighbors(grid, x, y, z, w);
+                    let c = `${x},${y},${z},${w}`;
+                    let value = grid.get(c) || 0;
 
-                    if (value === '#' && n['#'] !== 2 && n['#'] !== 3) {
-                        next[w][z][y][x] = '.';
-                    } else if (value === '.' && n['#'] === 3) {
-                        next[w][z][y][x] = '#';
+                    if (value === 1 && (n === 2 || n === 3)) {
+                        next.set(c, 1);
+                    } else if (value === 0 && n === 3) {
+                        next.set(c, 1);
                     }
                 }
             }
@@ -154,32 +70,16 @@ const cycle = (grid) => {
     return next;
 };
 
-/**
- * Count active
- */
-const countActive = (grid) => {
-    if (typeof grid === 'string') {
-        return grid === '#' ? 1 : 0;
-    }
-
-    let active = 0;
-
-    for (let layer in grid) {
-        active += countActive(grid[layer]);
-    }
-
-    return active;
-};
-
 module.exports = (file, cycles = 6) => {
     let yx = file.split('\n').map((l) => l.split(''));
-    // [w [z [y [x]]]]
-    let grid = [[yx]];
+    let grid = new Map();
+    let size = yx.length;
 
-    // where arg[0] is grid
-    // and arg[1] is the expanded size of grid we need to record results
-    // starting + number cycles we have
-    expandGrid(grid, yx.length / 2 + cycles);
+    for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+            grid.set(`${x},${y},0,0`, yx[y][x] === '#' ? 1 : 0);
+        }
+    }
 
     while (cycles > 0) {
         grid = cycle(grid);
@@ -187,5 +87,11 @@ module.exports = (file, cycles = 6) => {
         cycles -= 1;
     }
 
-    return countActive(grid);
+    let active = 0;
+
+    grid.forEach((value) => {
+        active += value;
+    });
+
+    return active;
 };
