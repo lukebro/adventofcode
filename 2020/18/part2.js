@@ -2,8 +2,8 @@ const { assert } = require('../../utils');
 
 // our operator precendance
 const OP_P = {
-    '+': 2,
-    '*': 1,
+    '+': 1,
+    '*': 0,
 };
 
 module.exports = (file) => {
