@@ -1,4 +1,4 @@
-const { findall } = require('../../utils');
+const { findall } = require('@lib/utils');
 
 module.exports = (file) => {
     let lines = file.split('\n');
@@ -6,11 +6,11 @@ module.exports = (file) => {
     let departTime = Number(lines[0]);
     let busIds = findall(/(\d+)/g, lines[1]).map(Number);
 
-    let times = busIds.map(id => [id, id]);
+    let times = busIds.map((id) => [id, id]);
 
     for (let time of times) {
         while (time[1] < departTime) {
-            time[1] += time[0]
+            time[1] += time[0];
         }
     }
 

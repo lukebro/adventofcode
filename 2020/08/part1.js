@@ -1,4 +1,4 @@
-const { findall } = require('../../utils');
+const { findall } = require('@lib/utils');
 
 function runProgram(ins) {
     let hits = {};

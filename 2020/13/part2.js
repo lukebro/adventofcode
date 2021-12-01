@@ -1,4 +1,4 @@
-const { crt } = require('../../utils');
+const { crt } = require('@lib/utils');
 
 module.exports = (file) => {
     let lines = file.split('\n');
@@ -24,7 +24,7 @@ module.exports = (file) => {
         mods.push(id);
     }
 
-    // edit after contest, moved crt + mod_inverse into utils
+    // edit after contest, moved crt + mod_inverse into lib
     // for future puzzles
 
     return crt(mods, remainders);

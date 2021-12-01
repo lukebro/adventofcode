@@ -1,4 +1,4 @@
-const { assert } = require('../../utils');
+const { assert } = require('@lib/utils');
 
 // our operator precendance
 const OP_P = {

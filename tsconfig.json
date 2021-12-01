@@ -1,11 +1,30 @@
 {
     "compilerOptions": {
+        "types": [
+            "node"
+        ],
         "strict": false,
         "noEmit": true,
         "allowJs": true,
         "target": "ESNext",
         "esModuleInterop": true,
         "moduleResolution": "node",
-        "baseUrl": "."
+        "baseUrl": ".",
+        "paths": {
+            "@lib/*": [
+                "./lib/*"
+            ]
+        },
+    },
+    "include": [
+        "./**/*"
+    ],
+    "exclude": [
+        "**/node_modules/**/*"
+    ],
+    "ts-node": {
+        "require": [
+            "tsconfig-paths/register"
+        ]
     }
 }

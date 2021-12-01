@@ -1,4 +1,4 @@
-const { findall } = require('../../utils');
+const { findall } = require('@lib/utils');
 
 module.exports = (file) => {
     let [rules, mine, nearby] = file.split('\n\n');

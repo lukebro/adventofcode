@@ -15,7 +15,6 @@ module.exports = (file) => {
             return 1;
         }
 
-
         if (memo[arr.length + ':' + m]) {
             return memo[arr.length + ':' + m];
         }

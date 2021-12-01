@@ -1,4 +1,4 @@
-const { pad } = require('../../utils');
+const { pad } = require('@lib/utils');
 
 module.exports = (file) => {
     let lines = file.split('\n');

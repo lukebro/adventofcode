@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import chalk from 'chalk';
 import { performance } from 'perf_hooks';
-import { pad } from './utils';
+import { pad } from '@lib/utils';
 
 /**
  * Loosley based off of https://github.com/markheath/advent-of-code-js
@@ -21,20 +21,20 @@ let days;
 
 if (!ioDay) {
     days = fs
-        .readdirSync(path.join(__dirname, year), { withFileTypes: true })
+        .readdirSync(path.join(__dirname, '..', year), { withFileTypes: true })
         .filter((dir) => dir.isDirectory())
         .map((dir) => dir.name);
 } else {
     days = [ioDay];
 }
 
-let jolly = (x: string) =>
+const jolly = (x: string) =>
     x
         .split('')
         .map((c, i) => (i % 2 ? chalk.green(c) : chalk.red(c)))
         .join('');
 
-let title = 'Advent of Code';
+const title = 'Advent of Code';
 console.log(jolly(title));
 console.log(`${chalk.bold(jolly(pad(year, title.length, ' ')))}\n`);
 
@@ -44,16 +44,17 @@ console.log(`${chalk.bold(jolly(pad(year, title.length, ' ')))}\n`);
 const sections = parts ? parts.split(',').map(Number) : [1, 2];
 let padding = 'Part 1'.length;
 
+type Answer = string | number | object;
 interface SolveFunction extends Function {
-    (input: string): string | number;
+    (input: string): Answer;
 }
 
 for (let i = 0; i < days.length; i++) {
-    let day = days[i];
+    const day = days[i];
 
     console.log(chalk.bold(`${pad('Day', padding, ' ')}: ${day}`));
 
-    let dir = path.join(__dirname, year, pad(day, 2));
+    const dir = path.join(__dirname, '..', year, pad(day, 2));
     let input;
 
     try {
@@ -67,7 +68,7 @@ for (let i = 0; i < days.length; i++) {
         continue;
     }
 
-    for (let part of sections) {
+    for (const part of sections) {
         let module: { default: SolveFunction; skip?: boolean } | SolveFunction;
         let solver: SolveFunction;
         let skip = false;

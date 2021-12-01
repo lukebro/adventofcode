@@ -8,8 +8,9 @@ module.exports = (input) => {
         for (let i = 0; i < group.length; i++)
             for (let answer of group[i]) all[answer] = (all[answer] || 0) + 1;
 
-        let everyone = Object.keys(all).filter((c) => all[c] === group.length)
-            .length;
+        let everyone = Object.keys(all).filter(
+            (c) => all[c] === group.length,
+        ).length;
 
         if (everyone > 0) total += everyone;
     }

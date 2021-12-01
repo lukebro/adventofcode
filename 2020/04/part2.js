@@ -1,4 +1,4 @@
-const { difference, findall } = require('../../utils');
+const { difference, findall } = require('@lib/utils');
 const REQUIRED_VALUES = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
 
 module.exports = (lines) => {

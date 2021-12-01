@@ -1,4 +1,4 @@
-const { assert } = require('../../utils');
+const { assert } = require('@lib/utils');
 
 module.exports = (file) => {
     let lines = file.split('\n').map((line) => {
