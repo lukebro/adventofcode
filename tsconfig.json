@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "strict": false,
+        "noEmit": true,
+        "allowJs": true,
+        "target": "ESNext",
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "baseUrl": "."
+    }
+}
