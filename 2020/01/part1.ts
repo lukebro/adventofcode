@@ -18,5 +18,3 @@ export default (input: string) => {
 
     return answer;
 };
-
-export const skip = true;

@@ -49,6 +49,10 @@ interface SolveFunction extends Function {
     (input: string): Answer;
 }
 
+const getInput = (file) => {
+    return fs.readFileSync(file, 'utf8').replace(/[\r]/g, '');
+};
+
 for (let i = 0; i < days.length; i++) {
     const day = days[i];
 
@@ -58,9 +62,7 @@ for (let i = 0; i < days.length; i++) {
     let input;
 
     try {
-        input = fs
-            .readFileSync(path.join(dir, 'input.txt'), 'utf8')
-            .replace(/[\r]/g, '');
+        input = getInput(path.join(dir, 'input.txt'));
     } catch (e) {
         console.error(
             chalk.red(`Cannot find input for year ${year} day ${day}.`),
@@ -69,9 +71,12 @@ for (let i = 0; i < days.length; i++) {
     }
 
     for (const part of sections) {
-        let module: { default: SolveFunction; skip?: boolean } | SolveFunction;
+        let module:
+            | { default: SolveFunction; skip?: boolean; input?: string }
+            | SolveFunction;
         let solver: SolveFunction;
         let skip = false;
+        let prevInput;
 
         try {
             module = require(path.join(dir, `part${part}`));
@@ -81,6 +86,19 @@ for (let i = 0; i < days.length; i++) {
             } else {
                 solver = module.default;
                 skip = module.skip;
+
+                if (module.input) {
+                    prevInput = input;
+                    try {
+                        input = getInput(path.join(dir, module.input));
+                    } catch (e: any) {
+                        console.error(
+                            chalk.red(
+                                `Cannot get custom input "${module.input}"`,
+                            ),
+                        );
+                    }
+                }
             }
         } catch (e: any) {
             if (e.code == 'MODULE_NOT_FOUND') {
@@ -104,6 +122,11 @@ for (let i = 0; i < days.length; i++) {
         let answer = solver(input);
         const end = performance.now();
         const time = Math.round(end - start);
+
+        // reset input
+        if (prevInput) {
+            input = prevInput;
+        }
 
         if (typeof answer === 'object') {
             answer = JSON.stringify(answer, null, 4);
