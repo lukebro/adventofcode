@@ -18,10 +18,15 @@ if (!year) {
 let days;
 
 if (!ioDay) {
-    days = fs
-        .readdirSync(path.join(__dirname, '..', year), { withFileTypes: true })
-        .filter((dir) => dir.isDirectory())
-        .map((dir) => dir.name);
+    try {
+        days = fs
+            .readdirSync(path.join(__dirname, '..', year), { withFileTypes: true })
+            .filter((dir) => dir.isDirectory())
+            .map((dir) => dir.name);
+    } catch (e: any) {
+        console.log(chalk.red(`No solutions exist for the year ${year}.`));
+        process.exit(1);
+    }
 } else {
     days = [ioDay];
 }
@@ -29,7 +34,7 @@ if (!ioDay) {
 const jolly = (x: string) =>
     x
         .split('')
-        .map((c, i) => (i % 2 ? chalk.green(c) : chalk.red(c)))
+        .map((c, i) => (Math.round(Math.random()) ? chalk.green(c) : chalk.red(c)))
         .join('');
 
 const title = 'Advent of Code';
@@ -53,7 +58,7 @@ const getInput = (file) => {
 
 (async () => {
     for await (const day of days) {
-        console.log(chalk.bold(`Day: ${day}`));
+        console.log(chalk.white.bold(`Day: ${day}`));
 
         const dir = path.join(__dirname, '..', year, pad(day, 2));
 
