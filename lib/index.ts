@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import path from 'path';
-import fs from 'fs';
+import fs from 'fs-extra';
 import chalk from 'chalk';
 import { performance } from 'perf_hooks';
 import { pad } from '@lib/utils';
@@ -53,9 +53,18 @@ const getInput = (file) => {
 
 (async () => {
     for await (const day of days) {
-        console.log(chalk.bold(`${pad('Day', padding, ' ')}: ${day}`));
+        console.log(chalk.bold(`Day: ${day}`));
 
         const dir = path.join(__dirname, '..', year, pad(day, 2));
+
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+            const template = path.join(__dirname, 'template.ts');
+            fs.copySync(template, path.join(dir, 'part1.ts'));
+            fs.copySync(template, path.join(dir, 'part2.ts'));
+            fs.outputFileSync(path.join(dir, 'example.txt'), '');
+        }
+
         const inputPath = path.join(dir, 'input.txt');
         let input;
 
@@ -80,13 +89,19 @@ const getInput = (file) => {
                     },
                 );
 
+                if (response.status === 404) {
+                    console.error(
+                        chalk.red(
+                            'The input is not available yet.',
+                        ),
+                    );
+
+                    continue;
+                }
+
                 input = await response.text();
                 fs.writeFileSync(inputPath, input, 'utf-8');
             } catch (e) {
-                console.error(chalk.red('Could not pull input from remote'));
-
-                throw e;
-
                 continue;
             }
             // file does not exist

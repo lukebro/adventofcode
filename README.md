@@ -1,4 +1,4 @@
-# [Advent of Code](https://adventofcode.com/) JavaScript Solutions
+# [Advent of Code](https://adventofcode.com/) JS + TS Solutions
 
 Solutions are in the appropriate year/day directory.
 
@@ -12,7 +12,7 @@ If only a year is provided, all days will run sequentially.
 Advent of Code
           2020
 
-   Day: 01
+Day: 01
 Part 1: 1016131 in 1ms
 Part 2: 276432018 in 6ms
 
@@ -24,11 +24,11 @@ Part 2: 276432018 in 6ms
 Advent of Code
           2020
 
-   Day: 01
+Day: 01
 Part 1: 1016131 in 1ms
 Part 2: 276432018 in 6ms
 
-   Day: 02
+Day: 02
 Part 1: 550 in 2ms
 Part 2: 634 in 1ms
 
@@ -44,7 +44,7 @@ The parts argument can be a comma seperated list of numbers. Omitting it runs pa
 Advent of Code
           2020
 
-   Day: 1
+Day: 1
 Part 2: 276432018 in 6ms
 
 ```
