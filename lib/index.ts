@@ -63,7 +63,7 @@ const getInput = (file) => {
             if (!process.env['AOC_SESSION']) {
                 console.error(
                     chalk.red(
-                        `Add your adventofcode.com session token to .env to automatically pull the input`,
+                        `Add your session token to .env to automatically pull the input`,
                     ),
                 );
 
