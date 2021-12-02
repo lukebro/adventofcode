@@ -1,12 +1,10 @@
+import 'dotenv/config';
 import path from 'path';
 import fs from 'fs';
 import chalk from 'chalk';
 import { performance } from 'perf_hooks';
 import { pad } from '@lib/utils';
-
-/**
- * Loosley based off of https://github.com/markheath/advent-of-code-js
- */
+import fetch from 'node-fetch';
 
 const args = process.argv.splice(2);
 
@@ -53,91 +51,125 @@ const getInput = (file) => {
     return fs.readFileSync(file, 'utf8').replace(/[\r]/g, '');
 };
 
-for (let i = 0; i < days.length; i++) {
-    const day = days[i];
+(async () => {
+    for await (const day of days) {
+        console.log(chalk.bold(`${pad('Day', padding, ' ')}: ${day}`));
 
-    console.log(chalk.bold(`${pad('Day', padding, ' ')}: ${day}`));
+        const dir = path.join(__dirname, '..', year, pad(day, 2));
+        const inputPath = path.join(dir, 'input.txt');
+        let input;
 
-    const dir = path.join(__dirname, '..', year, pad(day, 2));
-    let input;
+        if (!fs.existsSync(inputPath)) {
+            if (!process.env['AOC_SESSION']) {
+                console.error(
+                    chalk.red(
+                        `Add your adventofcode.com session token to .env to automatically pull the input`,
+                    ),
+                );
 
-    try {
-        input = getInput(path.join(dir, 'input.txt'));
-    } catch (e) {
-        console.error(
-            chalk.red(`Cannot find input for year ${year} day ${day}.`),
-        );
-        continue;
-    }
-
-    for (const part of sections) {
-        let module:
-            | { default: SolveFunction; skip?: boolean; input?: string }
-            | SolveFunction;
-        let solver: SolveFunction;
-        let skip = false;
-        let prevInput;
-
-        try {
-            module = require(path.join(dir, `part${part}`));
-
-            if (typeof module === 'function') {
-                solver = module;
-            } else {
-                solver = module.default;
-                skip = module.skip;
-
-                if (module.input) {
-                    prevInput = input;
-                    try {
-                        input = getInput(path.join(dir, module.input));
-                    } catch (e: any) {
-                        console.error(
-                            chalk.red(
-                                `Cannot get custom input "${module.input}"`,
-                            ),
-                        );
-                    }
-                }
-            }
-        } catch (e: any) {
-            if (e.code == 'MODULE_NOT_FOUND') {
-                break;
+                continue;
             }
 
-            console.error(chalk.red(e));
-            continue;
+            try {
+                const response = await fetch(
+                    `https://adventofcode.com/${year}/day/${day}/input`,
+                    {
+                        headers: {
+                            Cookie: `session=${process.env['AOC_SESSION']}`,
+                        },
+                    },
+                );
+
+                input = await response.text();
+                fs.writeFileSync(inputPath, input, 'utf-8');
+            } catch (e) {
+                console.error(chalk.red('Could not pull input from remote'));
+
+                throw e;
+
+                continue;
+            }
+            // file does not exist
+        } else {
+            try {
+                input = getInput(inputPath);
+            } catch (e) {
+                console.error(
+                    chalk.red(`Cannot find input for year ${year} day ${day}.`),
+                );
+                continue;
+            }
         }
 
-        if (skip) {
+        for (const part of sections) {
+            let module:
+                | { default: SolveFunction; skip?: boolean; input?: string }
+                | SolveFunction;
+            let solver: SolveFunction;
+            let skip = false;
+            let prevInput;
+
+            try {
+                module = require(path.join(dir, `part${part}`));
+
+                if (typeof module === 'function') {
+                    solver = module;
+                } else {
+                    solver = module.default;
+                    skip = module.skip;
+
+                    if (module.input) {
+                        prevInput = input;
+                        try {
+                            input = getInput(path.join(dir, module.input));
+                        } catch (e: any) {
+                            console.error(
+                                chalk.red(
+                                    `Cannot get custom input "${module.input}"`,
+                                ),
+                            );
+                        }
+                    }
+                }
+            } catch (e: any) {
+                if (e.code == 'MODULE_NOT_FOUND') {
+                    break;
+                }
+
+                console.error(chalk.red(e));
+                continue;
+            }
+
+            if (skip) {
+                console.log(
+                    `${chalk.red(
+                        pad(`Part ${part}`, padding, ' ') + ':',
+                    )} ${chalk.red('Skipped')}`,
+                );
+                continue;
+            }
+
+            const start = performance.now();
+            let answer = solver(input);
+            const end = performance.now();
+            const time = Math.round(end - start);
+
+            // reset input
+            if (prevInput) {
+                input = prevInput;
+            }
+
+            if (typeof answer === 'object') {
+                answer = JSON.stringify(answer, null, 4);
+            }
+
             console.log(
                 `${chalk.red(
                     pad(`Part ${part}`, padding, ' ') + ':',
-                )} ${chalk.red('Skipped')}`,
+                )} ${chalk.green(answer)} ${chalk.black(`in ${time}ms`)}`,
             );
-            continue;
         }
 
-        const start = performance.now();
-        let answer = solver(input);
-        const end = performance.now();
-        const time = Math.round(end - start);
-
-        // reset input
-        if (prevInput) {
-            input = prevInput;
-        }
-
-        if (typeof answer === 'object') {
-            answer = JSON.stringify(answer, null, 4);
-        }
-
-        console.log(
-            `${chalk.red(
-                pad(`Part ${part}`, padding, ' ') + ':',
-            )} ${chalk.green(answer)} ${chalk.black(`in ${time}ms`)}`,
-        );
+        console.log();
     }
-
-    console.log();
-}
+})();

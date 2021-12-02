@@ -7,7 +7,9 @@
         "format": "prettier -w '**/*.{ts,js}'"
     },
     "dependencies": {
-        "chalk": "^4.1.0"
+        "chalk": "^4.1.0",
+        "dotenv": "^10.0.0",
+        "node-fetch": "^2.6.6"
     },
     "devDependencies": {
         "@types/node": "^16.11.11",

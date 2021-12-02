@@ -3,3 +3,5 @@ export default (file: string) => {
 
     return null;
 };
+
+export const input = 'example.txt';
