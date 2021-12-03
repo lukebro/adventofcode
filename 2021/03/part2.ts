@@ -5,9 +5,9 @@
 export default (file: string) => {
     const lines = file.split('\n');
 
-    function getRating(numbers, flip: boolean = false) {
-        let arr = numbers.slice();
-        let idx = 0;
+    function getRating(numbers: string[], flip: boolean = false) {
+        let arr: string[] = numbers.slice();
+        let idx: number = 0;
 
         while (arr.length > 1 && idx < numbers[0].length) {
             let oneCount = 0;

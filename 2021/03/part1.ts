@@ -1,9 +1,13 @@
 export default (file: string) => {
-    const grid = file.split('\n').map((line) => line.split('').map(Number));
+    const grid: number[][] = file
+        .split('\n')
+        .map((line) => line.split('').map((n) => parseInt(n, 2)));
+
+    const byteSize: number = grid?.[0].length;
 
     const oneCount = Array(grid[0].length).fill(0);
     for (let i = 0; i < grid.length; i++) {
-        for (let j = 0; j < grid[i].length; j++) {
+        for (let j = 0; j < byteSize; j++) {
             if (grid[i][j]) {
                 oneCount[j] += 1;
             }
@@ -21,7 +25,7 @@ export default (file: string) => {
     }
 
     const gammaRate = parseInt(byteString, 2);
-    const mask = parseInt(Array(grid[0].length).fill(1).join(''), 2);
+    const mask = parseInt('1'.repeat(byteSize), 2);
     const epsilonRate = gammaRate ^ mask;
 
     return gammaRate * epsilonRate;
