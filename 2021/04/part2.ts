@@ -70,30 +70,23 @@ function mark(board, number) {
 function checkWinner(board: Square[]): boolean {
     // check rows
     for (let i = 0; i < board.length; i += 5) {
-        if (
-            board[i].picked &&
-            board[i + 1].picked &&
-            board[i + 2].picked &&
-            board[i + 3].picked &&
-            board[i + 4].picked
-        ) {
-            return true;
-        }
-    }
+        let colWinner = true;
+        let rowWinner = true;
+        for (let j = 0; j < 5; j++) {
+            if (!board[i + j].picked) {
+                rowWinner = false;
+            }
 
-    // check columns
-    for (let i = 0; i < 5; i++) {
-        let j = i;
+            if (!board[i / 5 + j * 5].picked) {
+                colWinner = false;
+            }
 
-        if (
-            board[j].picked &&
-            board[(j += 5)].picked &&
-            board[(j += 5)].picked &&
-            board[(j += 5)].picked &&
-            board[(j += 5)].picked
-        ) {
-            return true;
+            if (!rowWinner && !colWinner) {
+                break;
+            }
         }
+
+        if (rowWinner || colWinner) return true;
     }
 
     return false;
