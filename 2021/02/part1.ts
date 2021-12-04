@@ -5,14 +5,12 @@ export default (file: string) => {
         .split('\n')
         .map((line) => findall(/(forward|down|up) (\d+)/g, line));
 
-
     let depth = 0;
     let horizontal = 0;
 
     for (const [direction, value] of commands) {
         let inc = Number(value);
         switch (direction) {
-
             case 'forward':
                 horizontal += inc;
                 break;
@@ -27,4 +25,3 @@ export default (file: string) => {
 
     return depth * horizontal;
 };
-
