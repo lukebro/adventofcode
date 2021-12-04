@@ -20,7 +20,9 @@ let days;
 if (!ioDay) {
     try {
         days = fs
-            .readdirSync(path.join(__dirname, '..', year), { withFileTypes: true })
+            .readdirSync(path.join(__dirname, '..', year), {
+                withFileTypes: true,
+            })
             .filter((dir) => dir.isDirectory())
             .map((dir) => dir.name);
     } catch (e: any) {
@@ -34,7 +36,9 @@ if (!ioDay) {
 const jolly = (x: string) =>
     x
         .split('')
-        .map((c, i) => (Math.round(Math.random()) ? chalk.green(c) : chalk.red(c)))
+        .map((c, i) =>
+            Math.round(Math.random()) ? chalk.green(c) : chalk.red(c),
+        )
         .join('');
 
 const title = 'Advent of Code';
@@ -95,11 +99,7 @@ const getInput = (file) => {
                 );
 
                 if (response.status === 404) {
-                    console.error(
-                        chalk.red(
-                            'The input is not available yet.',
-                        ),
-                    );
+                    console.error(chalk.red('The input is not available yet.'));
 
                     continue;
                 }
