@@ -8,6 +8,10 @@ export const difference = (a: any[], b: any[]) => {
     return Array.from(a).filter((x) => !b.includes(x));
 };
 
+export const sum = (arr: number[]): number => {
+    return arr.reduce((acc, n) => acc + n, 0);
+};
+
 export const findall = (regex: RegExp, str: string) => {
     let hits = [];
     let match;
