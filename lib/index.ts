@@ -57,7 +57,10 @@ interface SolveFunction extends Function {
 }
 
 const getInput = (file) => {
-    return fs.readFileSync(file, 'utf8').replace(/[\r]/g, '');
+    return fs
+        .readFileSync(file, 'utf8')
+        .replace(/[\r]/g, '')
+        .replace(/\n+$/g, '');
 };
 
 (async () => {
