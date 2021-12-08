@@ -12,6 +12,18 @@ export const sum = (arr: number[]): number => {
     return arr.reduce((acc, n) => acc + n, 0);
 };
 
+export const isSetEqual = <T>(a: Set<T>, b: Set<T>): boolean => {
+    if (a.size !== b.size) {
+        return false;
+    }
+
+    for (const i of a) {
+        if (!b.has(i)) return false;
+    }
+
+    return true;
+};
+
 export const findall = (regex: RegExp, str: string) => {
     let hits = [];
     let match;
