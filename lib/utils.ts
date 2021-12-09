@@ -12,6 +12,10 @@ export const sum = (arr: number[]): number => {
     return arr.reduce((acc, n) => acc + n, 0);
 };
 
+export const product = (arr: number[]): number => {
+    return arr.reduce((acc, n) => acc * n, 1);
+};
+
 export const isSetEqual = <T>(a: Set<T>, b: Set<T>): boolean => {
     if (a.size !== b.size) {
         return false;
