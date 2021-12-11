@@ -42,13 +42,6 @@ export default (file: string) => {
         }
     };
 
-    const debug = () => {
-        for (let row of grid) {
-            console.log(row.join(''));
-        }
-        console.log();
-    };
-
     for (let i = 0; i < 100; i++) {
         step();
     }
