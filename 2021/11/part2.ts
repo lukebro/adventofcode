@@ -1,7 +1,7 @@
 export default (file: string) => {
     const grid = file.split('\n').map((line) => line.split('').map(Number));
 
-    const flash = (x, y) => {
+    const flash = (x, y, grid) => {
         if (grid[y][x] <= 9 || grid[y][x] === 0) return;
 
         grid[y][x] = 0;
@@ -19,14 +19,14 @@ export default (file: string) => {
                     grid[dy][dx] += 1;
 
                     if (grid[dy][dx] === 10) {
-                        flash(dx, dy);
+                        flash(dx, dy, grid);
                     }
                 }
             }
         }
     };
 
-    const step = () => {
+    const step = (grid) => {
         for (let y = 0; y < grid.length; y++) {
             for (let x = 0; x < grid[y].length; x++) {
                 grid[y][x] += 1;
@@ -35,7 +35,7 @@ export default (file: string) => {
 
         for (let y = 0; y < grid.length; y++) {
             for (let x = 0; x < grid[y].length; x++) {
-                flash(x, y);
+                flash(x, y, grid);
             }
         }
 
@@ -54,7 +54,7 @@ export default (file: string) => {
 
     while (true) {
         i += 1;
-        if (step()) {
+        if (step(grid)) {
             break;
         }
     }
