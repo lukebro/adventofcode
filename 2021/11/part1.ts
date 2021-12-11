@@ -21,7 +21,7 @@ export default (file: string) => {
 
                     grid[dy][dx] += 1;
 
-                    if (grid[dy][dx] === 10) {
+                    if (grid[dy][dx] > 9) {
                         flashes += flash(dx, dy, grid);
                     }
                 }
