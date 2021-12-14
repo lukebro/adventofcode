@@ -28,7 +28,7 @@ export const isSetEqual = <T>(a: Set<T>, b: Set<T>): boolean => {
     return true;
 };
 
-export const findall = (regex: RegExp, str: string): string | string[] => {
+export const findall = (regex: RegExp, str: string) => {
     let hits = [];
     let match;
 

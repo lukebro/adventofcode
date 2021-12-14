@@ -8,6 +8,7 @@ module.exports = (file) => {
             /(.*): (\d+)-(\d+) or (\d+)-(\d+)/g,
             rule,
         );
+
         return [name, ...ranges.map(Number)];
     });
 
