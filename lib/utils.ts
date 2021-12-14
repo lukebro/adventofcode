@@ -28,7 +28,7 @@ export const isSetEqual = <T>(a: Set<T>, b: Set<T>): boolean => {
     return true;
 };
 
-export const findall = (regex: RegExp, str: string) => {
+export const findall = (regex: RegExp, str: string): string | string[] => {
     let hits = [];
     let match;
 
@@ -53,7 +53,11 @@ export const findall = (regex: RegExp, str: string) => {
     return hits;
 };
 
-export const pad = (str: string, length: number, char: string = '0') => {
+export const pad = (
+    str: string,
+    length: number,
+    char: string = '0',
+): string => {
     while (str.length < length) {
         str = char + str;
     }
@@ -106,7 +110,7 @@ export const crt = (n: bigint[], a: bigint[]) => {
  * will be blocked :(
  */
 let uniqId = 0;
-export const observe = (timeInSec: number = 5) => {
+export const observe = (timeInSec: number = 5): Function => {
     let time = performance.now();
     let sleep = timeInSec * 1000;
     let interval = 0;
