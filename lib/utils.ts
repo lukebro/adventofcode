@@ -1,6 +1,7 @@
 import assert from 'assert';
 import { performance } from 'perf_hooks';
 
+export { default as Heap } from './Heap';
 export { assert };
 
 export const difference = (a: any[], b: any[]) => {
