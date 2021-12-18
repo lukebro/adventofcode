@@ -165,7 +165,7 @@ export const reduce = (tree: Node) => {
 };
 
 export const parse = (input: string): Node[] =>
-    input.split('\n').map((line) => convertToTree(eval(line)));
+    input.split('\n').map((line) => convertToTree(JSON.parse(line)));
 
 export default (file: string): number => {
     const fish = parse(file);
