@@ -9,8 +9,8 @@ export const difference = (a: any[], b: any[]) => {
     return Array.from(a).filter((x) => !b.includes(x));
 };
 
-export const sum = (arr: number[]): number => {
-    return arr.reduce((acc, n) => acc + n, 0);
+export const sum = (arr: any[]) => {
+    return arr.reduce((acc, n) => acc + n);
 };
 
 export const product = (arr: number[]): number => {
@@ -134,4 +134,46 @@ export const observe = (timeInSec: number = 5): Function => {
     };
 
     return tick;
+};
+
+export const permutator = <T>(
+    values: T[],
+    {
+        size,
+        repeat = false,
+    }: {
+        size?: number;
+        repeat?: boolean;
+    },
+): T[][] => {
+    if (!size) {
+        size = values.length;
+    }
+
+    const result = [];
+
+    const generate = (options = [], current = []) => {
+        if (current.length >= size) {
+            result.push(current);
+            return;
+        }
+
+        for (let i = 0; i < options.length; i++) {
+            const next = current.slice();
+
+            if (repeat) {
+                next.push(options[i]);
+                generate(options, next);
+            } else {
+                const nextOptions = options.slice();
+                next.push(nextOptions[i]);
+                nextOptions.splice(i, 1);
+                generate(nextOptions, next);
+            }
+        }
+    };
+
+    generate(values);
+
+    return result;
 };
