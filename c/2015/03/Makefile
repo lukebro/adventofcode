@@ -1,6 +1,6 @@
 CC=clang
 CFLAGS=-Wall -Wextra -std=c11 -pedantic -Wno-unused-parameter
-INPUT=./input.txt
+INPUT=input.txt
 
 .PHONY: test
 
