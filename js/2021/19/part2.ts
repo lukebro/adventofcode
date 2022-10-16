@@ -1,7 +1,15 @@
+import { solve, parse } from './part1';
+import { manhattan } from '@lib/utils';
+
 export default (file: string) => {
-    const lines = file.split('\n');
+	const [, scanners] = solve(parse(file));
 
-    return null;
+	let max = 0;
+	for (let i = 0; i < scanners.length; ++i) {
+		for (let j = i + 1; j < scanners.length; ++j) {
+			max = Math.max(max, manhattan(scanners[i], scanners[j]));
+		}
+	}
+
+	return max;
 };
-
-export const input = 'example.txt';
