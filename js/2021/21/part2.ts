@@ -55,14 +55,15 @@ const playGame = (positions, scores, turn) => {
 };
 
 export default (file: string) => {
-    const starting = file
-        .split('\n')
-        .map((line) => parseInt(line.match(/(\d+)/g)[1], 10));
 
-    const positions = [...starting];
-    const scores = [0, 0];
+    // const starting = file
+    //     .split('\n')
+    //     .map((line) => parseInt(line.match(/(\d+)/g)[1], 10));
 
-    const wins = playGame(positions, scores, 0);
+    // const positions = [...starting];
+    // const scores = [0, 0];
 
-    return wins;
+    // const wins = playGame(positions, scores, 0);
+
+    return undefined;
 };
