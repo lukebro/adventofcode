@@ -1,4 +1,4 @@
-import { sum, permutator } from '@lib/utils';
+import { sum, permutations } from '@lib/utils';
 export const input = 'example.txt';
 
 const nextPosition = (current, roll) => {
@@ -6,7 +6,7 @@ const nextPosition = (current, roll) => {
 };
 
 // there's gonna be duplicate sums but i think that's ok
-const DIE_ROLLS: number[][] = permutator([1, 2, 3], {
+const DIE_ROLLS: number[][] = permutations([1, 2, 3], {
     size: 3,
     repeat: true,
 }).map(sum);

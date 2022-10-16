@@ -1,63 +1,141 @@
-const distance = (point1, point2) => {
-    let sum = 0;
+import { permutations, euclidean } from '@lib/utils';
 
-    for (let i = 0; i < 3; i++) {
-        sum += Math.abs(point1[i] - point2[i]);
-    }
+const OVERLAPPING_BEACONS = 12;
+const DIMENSIONS = 3;
+const TRANFORMS = permutations([1, -1], { size: DIMENSIONS, repeat: true });
+const SHUFFLES = permutations([0, 1, 2]);
 
-    return sum;
-};
+type Coord = [number, number, number];
 
-const getDistances = (scanner) => {
-    const grid = new Map();
+function applyTransform(coords, transform) {
+	const result = [...coords];
 
-    for (let i = 0; i < scanner.length; i++) {
-        let distances = [];
-        for (let j = 0; j < scanner.length; j++) {
-            if (i === j) continue;
+	for (let i = 0; i < result.length; ++i) {
+		result[i] = result[i] * transform[i];
+	}
 
-            distances.push(distance(scanner[i], scanner[j]));
-        }
+	return result;
+}
 
-        grid.set(scanner[i].join(','), distances);
-    }
+function applyShuffle(coords, shuffle) {
+	const result = [];
 
-    return grid;
-};
+	for (let i = 0; i < shuffle.length; ++i) {
+		result.push(coords[shuffle[i]]);
+	}
+
+	return result;
+}
+
+function key(x, y, z) {
+	return `${x},${y},${z}`;
+}
+
+function add(world, x, y, z) {
+	const k = key(x, y, z);
+
+	if (world.has(k)) {
+		world.set(k, world.get(k) + 1);
+		return;
+	}
+
+	world.set(k, 1);
+}
+
+function has(world, x, y, z) {
+	return world.has(key(x, y, z));
+}
+
+function all(world) {
+	return [...world.keys()].map((key) => key.split(',').map(Number));
+}
+
+function relative(beacon, all) {
+	return all.map((current) => {
+		return [
+			beacon[0] - current[0],
+			beacon[1] - current[1],
+			beacon[2] - current[2],
+		];
+	});
+}
+
+function fitToWorld(scan, world) {
+	const map = all(world);
+	let fit = false;
+	let fitScan;
+
+	for (const beacon of scan) {
+		const relScan = relative(beacon, scan);
+		const tRelScan = TRANFORMS.map((transform) =>
+			relScan.map((coords) => applyTransform(coords, transform)),
+		);
+
+		for (const [x, y, z] of map) {
+			for (const t of tRelScan) {
+				const shuffled = SHUFFLES.map((shuffle) =>
+					t.map((coords) => applyShuffle(coords, shuffle)),
+				);
+
+				for (const s of shuffled) {
+					let matches = 0;
+					for (const [dx, dy, dz] of s) {
+						if (has(world, x + dx, y + dy, z + dz)) {
+							matches += 1;
+						}
+
+						if (matches >= OVERLAPPING_BEACONS) {
+							break;
+						}
+					}
+
+					if (matches >= OVERLAPPING_BEACONS) {
+						fit = true;
+						fitScan = s.map(([dx, dy, dz]) => [x + dx, y + dy, z + dz]);
+						break;
+					}
+				}
+			}
+
+			if (fit) {
+				break;
+			}
+		}
+
+		if (fit) {
+			break;
+		}
+	}
+
+	return fit ? fitScan : null;
+}
 
 export default (file: string) => {
-    const scanners = file.split('\n\n').map((rest) => {
-        const [, ...lines] = rest.split('\n');
+	const scans = file.split('\n\n').map((rest) => {
+		const [, ...lines] = rest.split('\n');
 
-        return lines.map((line) => line.split(',').map(Number));
-    });
+		return lines.map((line) => line.split(',').map(Number));
+	});
 
-    const distances = [];
+	const origin = scans.shift();
+	const world = new Map();
 
-    for (const scanner of scanners) {
-        distances.push(getDistances(scanner));
-    }
+	origin.forEach((coord: Coord) => {
+		add(world, ...coord);
+	});
 
-    let [one, ...rest] = distances;
-    let count = 0;
-    for (const distance of rest) {
-        for (const [k, v] of distance) {
-            for (const v1 of v) {
-                let b = false;
-                for (const [, v2] of one) {
-                    if (v2.indexOf(v1) > -1) {
-                        b = true;
-                        count += 1;
-                        break;
-                    }
-                }
+	while (scans.length !== 0) {
+		const scan = scans.shift();
+		const result = fitToWorld(scan, world);
 
-                if (b) break;
-            }
-        }
-    }
+		if (result) {
+			result.forEach((coord: Coord) => {
+				add(world, ...coord);
+			});
+		} else {
+			scans.push(scan);
+		}
+	}
 
-    return count;
+	return world.size;
 };
-
-export const input = 'example.txt';

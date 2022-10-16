@@ -5,103 +5,103 @@ export { default as Heap } from './Heap';
 export { assert };
 
 export const difference = (a: any[], b: any[]) => {
-    b = Array.from(b);
-    return Array.from(a).filter((x) => !b.includes(x));
+	b = Array.from(b);
+	return Array.from(a).filter((x) => !b.includes(x));
 };
 
 export const sum = (arr: any[]) => {
-    return arr.reduce((acc, n) => acc + n);
+	return arr.reduce((acc, n) => acc + n);
 };
 
 export const product = (arr: number[]): number => {
-    return arr.reduce((acc, n) => acc * n, 1);
+	return arr.reduce((acc, n) => acc * n, 1);
 };
 
 export const isSetEqual = <T>(a: Set<T>, b: Set<T>): boolean => {
-    if (a.size !== b.size) {
-        return false;
-    }
+	if (a.size !== b.size) {
+		return false;
+	}
 
-    for (const i of a) {
-        if (!b.has(i)) return false;
-    }
+	for (const i of a) {
+		if (!b.has(i)) return false;
+	}
 
-    return true;
+	return true;
 };
 
 export const findall = (regex: RegExp, str: string) => {
-    let hits = [];
-    let match;
+	let hits = [];
+	let match;
 
-    // we need g flag for exec to continue
-    // to loop.. so incase i forget
-    regex = new RegExp(regex, 'g');
+	// we need g flag for exec to continue
+	// to loop.. so incase i forget
+	regex = new RegExp(regex, 'g');
 
-    while ((match = regex.exec(str)) !== null) {
-        let results = match.length === 1 ? match : match.splice(1);
-        // if we have only one capture group
-        if (results.length === 1) {
-            hits.push(results[0]);
-        } else {
-            hits.push(results);
-        }
-    }
+	while ((match = regex.exec(str)) !== null) {
+		let results = match.length === 1 ? match : match.splice(1);
+		// if we have only one capture group
+		if (results.length === 1) {
+			hits.push(results[0]);
+		} else {
+			hits.push(results);
+		}
+	}
 
-    if (hits.length === 1) {
-        return hits[0];
-    }
+	if (hits.length === 1) {
+		return hits[0];
+	}
 
-    return hits;
+	return hits;
 };
 
 export const pad = (
-    str: string,
-    length: number,
-    char: string = '0',
+	str: string,
+	length: number,
+	char: string = '0',
 ): string => {
-    while (str.length < length) {
-        str = char + str;
-    }
+	while (str.length < length) {
+		str = char + str;
+	}
 
-    return str;
+	return str;
 };
 
 export const mod_inverse = (a: any, b: any) => {
-    let b0 = b;
-    let x0 = 0n;
-    let x1 = 1n;
+	let b0 = b;
+	let x0 = 0n;
+	let x1 = 1n;
 
-    if (b === 1n) return 1n;
+	if (b === 1n) return 1n;
 
-    while (a > 1n) {
-        let q = a / b;
-        let temp = a;
-        a = b;
-        b = temp % b;
-        temp = x0;
-        x0 = x1 - BigInt(q) * x0;
-        x1 = temp;
-    }
+	while (a > 1n) {
+		let q = a / b;
+		let temp = a;
+		a = b;
+		b = temp % b;
+		temp = x0;
+		x0 = x1 - BigInt(q) * x0;
+		x1 = temp;
+	}
 
-    if (x1 < 0n) {
-        x1 += b0;
-    }
+	if (x1 < 0n) {
+		x1 += b0;
+	}
 
-    return x1;
+	return x1;
 };
 
 // http://rosettacode.org/wiki/Chinese_remainder_theorem
 // where n = list of mods and a is list of remainders
 export const crt = (n: bigint[], a: bigint[]) => {
-    let prod = n.reduce((a, c) => a * c, 1n);
-    let sum = 0n;
+	let prod = n.reduce((a, c) => a * c, 1n);
+	let sum = 0n;
 
-    for (let i = 0; i < n.length; i++) {
-        let p = prod / n[i];
-        sum += a[i] * mod_inverse(p, n[i]) * BigInt(p);
-    }
+	for (let i = 0; i < n.length; i++) {
+		let p = prod / n[i];
+		sum += a[i] * mod_inverse(p, n[i]) * BigInt(p);
+	}
 
-    return sum % prod;
+	return sum % prod;
 };
 
 /**
@@ -112,68 +112,92 @@ export const crt = (n: bigint[], a: bigint[]) => {
  */
 let uniqId = 0;
 export const observe = (timeInSec: number = 5): Function => {
-    let time = performance.now();
-    let sleep = timeInSec * 1000;
-    let interval = 0;
-    let id = ++uniqId;
+	let time = performance.now();
+	let sleep = timeInSec * 1000;
+	let interval = 0;
+	let id = ++uniqId;
 
-    console.log(`[${id}][0s] Observing every ${timeInSec} seconds`);
+	console.log(`[${id}][0s] Observing every ${timeInSec} seconds`);
 
-    let tick = (value: any) => {
-        let now = performance.now();
-        if (now - time < sleep) return;
-        interval += 1;
-        time = now;
-        console.log(
-            `[${id}][${interval * timeInSec}s] Observed: ${JSON.stringify(
-                value,
-                null,
-                4,
-            )}`,
-        );
-    };
+	let tick = (value: any) => {
+		let now = performance.now();
+		if (now - time < sleep) return;
+		interval += 1;
+		time = now;
+		console.log(
+			`[${id}][${interval * timeInSec}s] Observed: ${JSON.stringify(
+				value,
+				null,
+				4,
+			)}`,
+		);
+	};
 
-    return tick;
+	return tick;
 };
 
-export const permutator = <T>(
-    values: T[],
-    {
-        size,
-        repeat = false,
-    }: {
-        size?: number;
-        repeat?: boolean;
-    },
+export const permutations = <T>(
+	values: T[],
+	{
+		size,
+		repeat = false,
+	}: {
+		size?: number;
+		repeat?: boolean;
+	} = {},
 ): T[][] => {
-    if (!size) {
-        size = values.length;
-    }
+	if (!size) {
+		size = values.length;
+	}
 
-    const result = [];
+	const result = [];
 
-    const generate = (options = [], current = []) => {
-        if (current.length >= size) {
-            result.push(current);
-            return;
-        }
+	const generate = (options = [], current = []) => {
+		if (current.length >= size) {
+			result.push(current);
+			return;
+		}
 
-        for (let i = 0; i < options.length; i++) {
-            const next = current.slice();
+		for (let i = 0; i < options.length; i++) {
+			const next = current.slice();
 
-            if (repeat) {
-                next.push(options[i]);
-                generate(options, next);
-            } else {
-                const nextOptions = options.slice();
-                next.push(nextOptions[i]);
-                nextOptions.splice(i, 1);
-                generate(nextOptions, next);
-            }
-        }
-    };
+			if (repeat) {
+				next.push(options[i]);
+				generate(options, next);
+			} else {
+				const nextOptions = options.slice();
+				next.push(nextOptions[i]);
+				nextOptions.splice(i, 1);
+				generate(nextOptions, next);
+			}
+		}
+	};
 
-    generate(values);
+	generate(values);
 
-    return result;
+	return result;
+};
+
+export const euclidean = (one: number[], two: number[]): number => {
+  assert(one.length === two.length);
+
+	let result = 0;
+
+	for (let i = 0; i < one.length; ++i) {
+		result += Math.pow(two[i] - one[i], 2);
+	}
+
+	return Math.sqrt(result);
+};
+
+export const manhattan = (one: number[], two: number[]): number => {
+  assert(one.length === two.length);
+
+	let result = 0;
+
+	for (let i = 0; i < one.length; ++i) {
+    result += Math.abs(two[i] - one[i]);
+	}
+
+  return result;
 };
