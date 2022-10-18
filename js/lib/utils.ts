@@ -9,8 +9,8 @@ export const difference = (a: any[], b: any[]) => {
 	return Array.from(a).filter((x) => !b.includes(x));
 };
 
-export const sum = (arr: any[]) => {
-	return arr.reduce((acc, n) => acc + n);
+export const sum = (arr: number[]) => {
+	return arr.reduce((acc, n) => acc + n, 0);
 };
 
 export const product = (arr: number[]): number => {
@@ -179,7 +179,7 @@ export const permutations = <T>(
 };
 
 export const euclidean = (one: number[], two: number[]): number => {
-  assert(one.length === two.length);
+	assert(one.length === two.length);
 
 	let result = 0;
 
@@ -191,13 +191,41 @@ export const euclidean = (one: number[], two: number[]): number => {
 };
 
 export const manhattan = (one: number[], two: number[]): number => {
-  assert(one.length === two.length);
+	assert(one.length === two.length);
 
 	let result = 0;
 
 	for (let i = 0; i < one.length; ++i) {
-    result += Math.abs(two[i] - one[i]);
+		result += Math.abs(two[i] - one[i]);
 	}
 
-  return result;
+	return result;
+};
+
+type MemoizedFunc = {
+	(...any): any;
+	cache: Map<String, any>;
+};
+
+export const memoize = (
+	fn: (...args) => any,
+	resolver?: (...args) => any,
+): MemoizedFunc => {
+	const memoized = function (...args) {
+		const key = resolver ? resolver.apply(this, args) : args.join('~');
+		const cache = memoized.cache;
+
+		if (cache.has(key)) {
+			return cache.get(key);
+		}
+
+		const result = fn.apply(this, args);
+		cache.set(key, result);
+
+		return result;
+	};
+
+	memoized.cache = new Map();
+
+	return memoized;
 };
