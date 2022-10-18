@@ -4,12 +4,8 @@ const createDie = () => {
     let i = { current: 0, rolls: 0 };
 
     const roll = () => {
-        i.current++;
         i.rolls++;
-
-        if (i.current === 101) {
-            i.current = 1;
-        }
+        i.current = (i.current += 1) % 100;
 
         return i.current;
     };
@@ -25,7 +21,7 @@ const createDie = () => {
     return next;
 };
 
-const score = (current, roll) => {
+export const score = (current, roll) => {
     let next = (current + roll) % 10;
 
     if (next === 0) {
