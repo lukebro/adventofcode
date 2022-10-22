@@ -1,7 +1,16 @@
+use aoc::*;
+
+fn main() {
+    let input = get_input_str();
+    let parsed = generate(&input);
+
+    println!("Part 1: {}", part1_solution(&parsed));
+    println!("Part 2: {}", part2_solution(&parsed));
+}
+
 #[derive(Debug, PartialEq, Eq)]
 pub struct Present(u32, u32, u32);
 
-#[aoc_generator(day2)]
 pub fn generate(input: &str) -> Vec<[u32; 3]> {
     input
         .lines()
@@ -16,7 +25,6 @@ pub fn generate(input: &str) -> Vec<[u32; 3]> {
         .collect()
 }
 
-#[aoc(day2, part1)]
 pub fn part1_solution(input: &Vec<[u32; 3]>) -> u32 {
     input.iter().fold(0, |acc, p| {
         let [l, w, h] = p;
@@ -27,7 +35,6 @@ pub fn part1_solution(input: &Vec<[u32; 3]>) -> u32 {
     })
 }
 
-#[aoc(day2, part2)]
 pub fn part2_solution(input: &Vec<[u32; 3]>) -> u32 {
     let mut mut_input = input.clone();
 
@@ -39,13 +46,18 @@ pub fn part2_solution(input: &Vec<[u32; 3]>) -> u32 {
     })
 }
 
-#[test]
-fn it_can_parse() {
-    assert_eq!(generate(&"1x4x5\n5x10x19"), vec![[1, 4, 5], [5, 10, 19]]);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn it_can_solve() {
-    assert_eq!(part1_solution(&vec![[2, 3, 4], [1, 1, 10]]), 58 + 43);
-    assert_eq!(part2_solution(&vec![[3, 1, 2], [4, 5, 9]]), 210);
+    #[test]
+    fn it_can_parse() {
+        assert_eq!(generate(&"1x4x5\n5x10x19"), vec![[1, 4, 5], [5, 10, 19]]);
+    }
+
+    #[test]
+    fn it_can_solve() {
+        assert_eq!(part1_solution(&vec![[2, 3, 4], [1, 1, 10]]), 58 + 43);
+        assert_eq!(part2_solution(&vec![[3, 1, 2], [4, 5, 9]]), 210);
+    }
 }

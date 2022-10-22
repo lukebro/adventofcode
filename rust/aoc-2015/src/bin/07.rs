@@ -1,4 +1,12 @@
+use aoc::*;
 use std::collections::HashMap;
+
+fn main() {
+    let input = get_input_str();
+    let parsed = generator(&input);
+
+    println!("{:?}", parsed);
+}
 
 #[allow(dead_code)]
 pub enum Gate {
@@ -48,7 +56,6 @@ impl Instructions {
     }
 }
 
-#[aoc_generator(day7)]
 pub fn generator(input: &str) -> HashMap<String, Instructions> {
     let wires = HashMap::new();
 

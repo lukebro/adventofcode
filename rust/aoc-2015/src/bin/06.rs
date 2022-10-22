@@ -1,4 +1,13 @@
+use aoc::*;
 use regex::Regex;
+
+fn main() {
+    let input = get_input_str();
+    let parsed = generator(&input);
+
+    println!("Part 1: {}", part1_solution(&parsed));
+    println!("Part 2: {}", part2_solution(&parsed));
+}
 
 #[derive(Debug, PartialEq)]
 pub enum Action {
@@ -14,7 +23,6 @@ pub struct Command {
     end: (usize, usize),
 }
 
-#[aoc_generator(day6)]
 pub fn generator(input: &str) -> Vec<Command> {
     let matcher = Regex::new(r"(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)").unwrap();
 
@@ -50,7 +58,6 @@ fn it_works() {
     println!("{:?}", r);
 }
 
-#[aoc(day6, part1)]
 pub fn part1_solution(input: &Vec<Command>) -> u32 {
     let mut grid = [[false; 1000]; 1000];
 
@@ -82,7 +89,6 @@ pub fn part1_solution(input: &Vec<Command>) -> u32 {
     count
 }
 
-#[aoc(day6, part2)]
 pub fn part2_solution(input: &Vec<Command>) -> u32 {
     let mut grid: [[u32; 1000]; 1000] = [[0; 1000]; 1000];
 

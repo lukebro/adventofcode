@@ -1,4 +1,12 @@
+use aoc::*;
 use fancy_regex::Regex;
+
+fn main() {
+    let input = get_input_str();
+
+    println!("Part 1: {}", part1_solution(&input));
+    println!("Part 2: {}", part2_solution(&input));
+}
 
 pub fn has_bad_strings(input: &str) -> bool {
     let bad_words: [&str; 4] = ["ab", "cd", "pq", "xy"];
@@ -67,36 +75,39 @@ pub fn is_nicer(input: &str) -> bool {
     repeats_letter_between(input) && two_letter_appear_twice(input)
 }
 
-#[aoc(day5, part1)]
 pub fn part1_solution(input: &str) -> u32 {
     input.lines().filter(|w| is_nice(&w)).count() as u32
 }
 
-#[aoc(day5, part2)]
 pub fn part2_solution(input: &str) -> u32 {
     input.lines().filter(|w| is_nicer(&w)).count() as u32
 }
 
-#[test]
-fn is_word_bad_or_good() {
-    assert_eq!(has_bad_strings(&"hello world"), false);
-    assert_eq!(has_bad_strings(&"hello pq world"), true);
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    assert_eq!(has_letter_twice(&"hello pq world"), true);
-    assert_eq!(has_letter_twice(&"helo pq world"), false);
+    #[test]
+    fn is_word_bad_or_good() {
+        assert_eq!(has_bad_strings(&"hello world"), false);
+        assert_eq!(has_bad_strings(&"hello pq world"), true);
 
-    assert_eq!(has_three_vowels(&"helo pq world"), true);
-    assert_eq!(has_three_vowels(&"helo pq wrld"), false);
-}
+        assert_eq!(has_letter_twice(&"hello pq world"), true);
+        assert_eq!(has_letter_twice(&"helo pq world"), false);
 
-#[test]
-fn good_words() {
-    assert_eq!(is_nice(&"ugknbfddgicrmopn"), true);
-    assert_eq!(is_nice(&"aaa"), true);
-}
+        assert_eq!(has_three_vowels(&"helo pq world"), true);
+        assert_eq!(has_three_vowels(&"helo pq wrld"), false);
+    }
 
-#[test]
-fn other_tests() {
-    assert_eq!(two_letter_appear_twice(&"xyxy"), true);
-    // assert_eq!(two_letter_appear_twice(&"aaab"), false);
+    #[test]
+    fn good_words() {
+        assert_eq!(is_nice(&"ugknbfddgicrmopn"), true);
+        assert_eq!(is_nice(&"aaa"), true);
+    }
+
+    #[test]
+    fn other_tests() {
+        assert_eq!(two_letter_appear_twice(&"xyxy"), true);
+        // assert_eq!(two_letter_appear_twice(&"aaab"), false);
+    }
 }

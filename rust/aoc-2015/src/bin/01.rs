@@ -1,28 +1,33 @@
-#[aoc(day1, part1)]
-pub fn part_one(input: &str) -> i32 {
+use aoc::*;
 
+fn main() {
+    let input = get_input_str();
+
+    println!("Part 1: {}", part_one(&input));
+    println!("Part 2: {}", part_two(&input).unwrap());
+}
+
+pub fn part_one(input: &str) -> i32 {
     let mut floor = 0;
 
     for c in input.chars() {
         floor += match c {
             ')' => -1,
             '(' => 1,
-            _ => 0
+            _ => 0,
         }
     }
 
     floor
 }
 
-
-#[aoc(day1, part2)]
 pub fn part_two(input: &str) -> Option<u32> {
     let mut floor = 0;
     for (i, c) in input.chars().enumerate() {
         floor += match c {
             ')' => -1,
             '(' => 1,
-            _ => 0
+            _ => 0,
         };
 
         if floor == -1 {
