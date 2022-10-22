@@ -1,4 +1,4 @@
-# Advent of Code in Rust
+# [Advent of Code](https://adventofcode.com/) Rust Solutions
 
 Advent of Code done in Rust to learn Rust.
 

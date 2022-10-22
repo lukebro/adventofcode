@@ -1,4 +1,4 @@
-# Advent of Code in C
+# [Advent of Code](https://adventofcode.com/) C Solutions
 
 Using c11 standard.
 
