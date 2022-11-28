@@ -1,7 +1,6 @@
 use aoc::*;
 use md5::{Digest, Md5};
 
-
 fn main() {
     let input = get_input_str();
 
