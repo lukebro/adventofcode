@@ -1,19 +1,19 @@
 module.exports = (input) => {
-    let floor = 0;
-    let position;
+	let floor = 0;
+	let position;
 
-    for (let i = 0; i < input.length; i++) {
-        if (input[i] === '(') {
-            floor++;
-        } else if (input[i] === ')') {
-            floor--;
-        }
+	for (let i = 0; i < input.length; i++) {
+		if (input[i] === '(') {
+			floor++;
+		} else if (input[i] === ')') {
+			floor--;
+		}
 
-        if (floor === -1) {
-            position = i + 1;
-            break;
-        }
-    }
+		if (floor === -1) {
+			position = i + 1;
+			break;
+		}
+	}
 
-    return position;
+	return position;
 };

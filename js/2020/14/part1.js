@@ -9,28 +9,28 @@
  * and we only use 36 bits
  */
 module.exports = (file) => {
-    let lines = file.split('\n');
-    let mask;
-    let andMask;
-    let orMask;
-    let registers = {};
+	let lines = file.split('\n');
+	let mask;
+	let andMask;
+	let orMask;
+	let registers = {};
 
-    for (let i = 0; i < lines.length; i++) {
-        let line = lines[i];
+	for (let i = 0; i < lines.length; i++) {
+		let line = lines[i];
 
-        if (line.startsWith('mask')) {
-            [, mask] = line.match(/mask = ([X10]+)/);
-            orMask = BigInt(parseInt(mask.replace(/X/g, '0'), 2));
-            andMask = BigInt(parseInt(mask.replace(/X/g, '1'), 2));
+		if (line.startsWith('mask')) {
+			[, mask] = line.match(/mask = ([X10]+)/);
+			orMask = BigInt(parseInt(mask.replace(/X/g, '0'), 2));
+			andMask = BigInt(parseInt(mask.replace(/X/g, '1'), 2));
 
-            continue;
-        }
+			continue;
+		}
 
-        let [, mem, value] = line.match(/mem\[(\d+)\] = (\d+)/);
-        value = BigInt(value);
+		let [, mem, value] = line.match(/mem\[(\d+)\] = (\d+)/);
+		value = BigInt(value);
 
-        registers[mem] = (value | orMask) & andMask;
-    }
+		registers[mem] = (value | orMask) & andMask;
+	}
 
-    return Object.values(registers).reduce((a, c) => a + c, 0n);
+	return Object.values(registers).reduce((a, c) => a + c, 0n);
 };

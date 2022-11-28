@@ -1,31 +1,31 @@
 const { crt } = require('@lib/utils');
 
 module.exports = (file) => {
-    let lines = file.split('\n');
-    let busIds = lines[1].split(',').map((x) => (x === 'x' ? x : BigInt(x)));
+	let lines = file.split('\n');
+	let busIds = lines[1].split(',').map((x) => (x === 'x' ? x : BigInt(x)));
 
-    // solve system of linear congruences using crt
+	// solve system of linear congruences using crt
 
-    // AHHHH this problem hits JS's Number.MAX_SAFE_INTEGER
-    // so after pulling my hair out for an hour I realized I have to convert everything to BigInt
+	// AHHHH this problem hits JS's Number.MAX_SAFE_INTEGER
+	// so after pulling my hair out for an hour I realized I have to convert everything to BigInt
 
-    let remainders = [];
-    let mods = [];
-    for (let i = 0; i < busIds.length; i++) {
-        let id = busIds[i];
+	let remainders = [];
+	let mods = [];
+	for (let i = 0; i < busIds.length; i++) {
+		let id = busIds[i];
 
-        if (id === 'x') {
-            continue;
-        }
+		if (id === 'x') {
+			continue;
+		}
 
-        // console.log(`x = ${id - i} (mod ${id})`);
+		// console.log(`x = ${id - i} (mod ${id})`);
 
-        remainders.push(id - BigInt(i));
-        mods.push(id);
-    }
+		remainders.push(id - BigInt(i));
+		mods.push(id);
+	}
 
-    // edit after contest, moved crt + mod_inverse into lib
-    // for future puzzles
+	// edit after contest, moved crt + mod_inverse into lib
+	// for future puzzles
 
-    return crt(mods, remainders);
+	return crt(mods, remainders);
 };

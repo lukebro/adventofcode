@@ -5,5 +5,5 @@ const part1 = require('./part1');
  * Same code for both.
  */
 module.exports = (input) => {
-    return part1(input, 30000000);
+	return part1(input, 30000000);
 };

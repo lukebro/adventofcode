@@ -1,39 +1,39 @@
 module.exports = (lines) => {
-    const bags = lines.split('\n').reduce((bags, i) => {
-        let matches = i.match(/(\d )?\w+ (\w+) bag/g);
+	const bags = lines.split('\n').reduce((bags, i) => {
+		let matches = i.match(/(\d )?\w+ (\w+) bag/g);
 
-        matches = matches.map((i) => {
-            let [, count, color] = i.match(/(\d)? ?(\w+ \w+) bag/);
+		matches = matches.map((i) => {
+			let [, count, color] = i.match(/(\d)? ?(\w+ \w+) bag/);
 
-            return { count: (count && +count) || null, color: color };
-        });
+			return { count: (count && +count) || null, color: color };
+		});
 
-        let children = matches.splice(1);
+		let children = matches.splice(1);
 
-        if (children.length === 1 && children[0].count === null) {
-            children = [];
-        }
+		if (children.length === 1 && children[0].count === null) {
+			children = [];
+		}
 
-        let parent = matches[0].color;
+		let parent = matches[0].color;
 
-        bags[parent] = bags[parent] || [];
-        bags[parent].push(...children);
+		bags[parent] = bags[parent] || [];
+		bags[parent].push(...children);
 
-        return bags;
-    }, {});
-    let count = 0;
+		return bags;
+	}, {});
+	let count = 0;
 
-    let gold = bags['shiny gold'];
+	let gold = bags['shiny gold'];
 
-    let countThem = (b, multipler) => {
-        for (let bag of b) {
-            count += bag.count * multipler;
+	let countThem = (b, multipler) => {
+		for (let bag of b) {
+			count += bag.count * multipler;
 
-            countThem(bags[bag.color], bag.count * multipler);
-        }
-    };
+			countThem(bags[bag.color], bag.count * multipler);
+		}
+	};
 
-    countThem(gold, 1);
+	countThem(gold, 1);
 
-    return count;
+	return count;
 };

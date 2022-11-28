@@ -1,5 +1,5 @@
 function isNum(s) {
-    return /[0-9+]/.test(s);
+	return /[0-9+]/.test(s);
 }
 
 // i had help solving this one..
@@ -7,75 +7,75 @@ function isNum(s) {
 // and seeing the answer... i couldn't unsee it :(
 
 function solveWire(solved, op, left, right) {
-    if (typeof left == 'string')
-        if (left in solved) left = solved[left];
-        else return null;
+	if (typeof left == 'string')
+		if (left in solved) left = solved[left];
+		else return null;
 
-    if (typeof right == 'string')
-        if (right in solved) right = solved[right];
-        else return null;
+	if (typeof right == 'string')
+		if (right in solved) right = solved[right];
+		else return null;
 
-    if (op == 'NOT') {
-        return 65535 - right;
-    }
+	if (op == 'NOT') {
+		return 65535 - right;
+	}
 
-    if (op == 'AND') {
-        return left & right;
-    }
+	if (op == 'AND') {
+		return left & right;
+	}
 
-    if (op == 'OR') {
-        return left | right;
-    }
+	if (op == 'OR') {
+		return left | right;
+	}
 
-    if (op == 'LSHIFT') {
-        return left << right;
-    }
+	if (op == 'LSHIFT') {
+		return left << right;
+	}
 
-    if (op == 'RSHIFT') {
-        return left >> right;
-    }
+	if (op == 'RSHIFT') {
+		return left >> right;
+	}
 
-    return right;
+	return right;
 }
 
 module.exports = (lines) => {
-    const wires = lines.split('\n').reduce((wires, i) => {
-        let [, a, b, c, d] = i.match(
-            /([a-z0-9]*?)\s?([NOT|AND|OR|LSHIFT|RSHIFT]*)\s?([a-z0-9]+) -> ([a-z0-9]+)$/,
-        );
+	const wires = lines.split('\n').reduce((wires, i) => {
+		let [, a, b, c, d] = i.match(
+			/([a-z0-9]*?)\s?([NOT|AND|OR|LSHIFT|RSHIFT]*)\s?([a-z0-9]+) -> ([a-z0-9]+)$/,
+		);
 
-        let out = d || null;
-        let op = b || null;
-        let right = c || null;
-        let left = null;
+		let out = d || null;
+		let op = b || null;
+		let right = c || null;
+		let left = null;
 
-        if (op) {
-            left = a || null;
-        }
+		if (op) {
+			left = a || null;
+		}
 
-        // convert to num
-        if (isNum(left)) left = +left;
-        if (isNum(right)) right = +right;
+		// convert to num
+		if (isNum(left)) left = +left;
+		if (isNum(right)) right = +right;
 
-        wires[out] = [op, left, right];
+		wires[out] = [op, left, right];
 
-        return wires;
-    }, {});
+		return wires;
+	}, {});
 
-    let total = Object.keys(wires).length;
-    let solved = {};
+	let total = Object.keys(wires).length;
+	let solved = {};
 
-    while (Object.keys(solved).length < total) {
-        for (let wire in wires) {
-            if (wire in solved) continue;
+	while (Object.keys(solved).length < total) {
+		for (let wire in wires) {
+			if (wire in solved) continue;
 
-            let solution = solveWire(solved, ...wires[wire]);
+			let solution = solveWire(solved, ...wires[wire]);
 
-            if (solution !== null) {
-                solved[wire] = solution;
-            }
-        }
-    }
+			if (solution !== null) {
+				solved[wire] = solution;
+			}
+		}
+	}
 
-    return solved.a;
+	return solved.a;
 };

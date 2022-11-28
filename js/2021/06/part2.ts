@@ -4,27 +4,27 @@ import { sum } from '@lib/utils';
 // individual fishes but I can group
 // and count by current age
 export default (file: string) => {
-    const fish = file.split(',').map((n) => parseInt(n, 10));
-    const ages = Array(9).fill(0);
+	const fish = file.split(',').map((n) => parseInt(n, 10));
+	const ages = Array(9).fill(0);
 
-    // initialize initial counts per age
-    for (let f of fish) {
-        ages[f] += 1;
-    }
+	// initialize initial counts per age
+	for (let f of fish) {
+		ages[f] += 1;
+	}
 
-    function progress(ages, days) {
-        for (let day = 0; day < days; day++) {
-            const zeros = ages.shift();
+	function progress(ages, days) {
+		for (let day = 0; day < days; day++) {
+			const zeros = ages.shift();
 
-            // this is our 8s
-            ages.push(zeros);
+			// this is our 8s
+			ages.push(zeros);
 
-            // parents go to age 6
-            ages[6] += zeros;
-        }
-    }
+			// parents go to age 6
+			ages[6] += zeros;
+		}
+	}
 
-    progress(ages, 256);
+	progress(ages, 256);
 
-    return sum(ages);
+	return sum(ages);
 };
