@@ -6,11 +6,5 @@ export default (input: string) => {
 		.map((elf) => sum(elf.split('\n').map((x) => parseInt(x, 10))))
 		.sort((a, b) => b - a);
 
-	let total = 0;
-
-	for (let i = 0; i < 3; ++i) {
-		total += calories[i];
-	}
-
-	return total;
+	return sum(calories.slice(0, 3));
 };
