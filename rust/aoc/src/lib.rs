@@ -14,5 +14,10 @@ pub fn get_input_vec() -> Vec<String> {
 }
 
 pub fn get_input_str() -> String {
-    get_input_vec().join("\n")
+    io::stdin()
+        .lock()
+        .lines()
+        .map(|line| line.unwrap())
+        .collect::<Vec<String>>()
+        .join("\n")
 }

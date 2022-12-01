@@ -33,6 +33,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aoc-2022"
+version = "0.1.0"
+dependencies = [
+ "aoc",
+]
+
+[[package]]
 name = "bit-set"
 version = "0.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
