@@ -6,6 +6,6 @@ DAY=`printf %02d ${2:-1}`
 
 echo "Day: $DAY Year: $YEAR"
 
-cp -u template.rs "./aoc-${YEAR}/src/bin/${DAY}.rs"
+cp -p template.rs "./aoc-${YEAR}/src/bin/${DAY}.rs"
 
 ./download-input.sh $YEAR $DAY
