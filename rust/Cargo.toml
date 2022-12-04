@@ -3,6 +3,7 @@
 members = [
   "aoc",
   "aoc-2015",
+  "aoc-2019",
   "aoc-2021",
   "aoc-2022"
 ]
