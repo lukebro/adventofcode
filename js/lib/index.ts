@@ -95,6 +95,7 @@ const getInput = (file) => {
 					{
 						headers: {
 							Cookie: `session=${process.env['AOC_SESSION']}`,
+							'User-Agent': 'github.com/lukebro/adventofcode by lukebrodowski@gmail.com'
 						},
 					},
 				);
