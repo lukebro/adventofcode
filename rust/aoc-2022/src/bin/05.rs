@@ -23,19 +23,17 @@ fn part_one(commands: &Commands, buckets: &mut Crates) -> String {
 }
 
 fn part_two(commands: &Commands, buckets: &mut Crates) -> String {
-    let mut items: Vec<char> = vec![];
+    let slices = buckets.as_mut_slice();
+
     // operate crane 9001!
     for command in commands {
-        for _ in 0..command.count {
-            let item = buckets[command.from].pop().unwrap();
-            items.push(item);
-        }
+        // we want to drain from this index
+        let start = slices[command.from].len() - command.count;
 
-        for c in items.iter().rev() {
-            buckets[command.to].push(*c);
-        }
-
-        items.clear();
+        // TODO(luke): see if extend with a temp bucket is faster
+        // than collecting here
+        let mut crates = slices[command.from].drain(start..).collect::<Vec<char>>();
+        slices[command.to].append(&mut crates);
     }
 
     get_message(&buckets)
