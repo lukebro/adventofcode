@@ -1,14 +1,15 @@
-use aoc::*;
+// use aoc::*;
 use std::collections::HashMap;
 
 fn main() {
-    let input = get_input_str();
-    let parsed = generator(&input);
+    // let input = get_input_str();
+    let parsed = generator();
 
     println!("{:?}", parsed);
 }
 
 #[allow(dead_code)]
+#[derive(Debug)]
 pub enum Gate {
     ASSIGN,
     AND,
@@ -25,7 +26,7 @@ impl Default for Gate {
 }
 
 #[allow(dead_code)]
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct Instructions {
     value: Option<u16>,
     gate: Gate,
@@ -56,20 +57,8 @@ impl Instructions {
     }
 }
 
-pub fn generator(input: &str) -> HashMap<String, Instructions> {
+pub fn generator() -> HashMap<String, Instructions> {
     let wires = HashMap::new();
 
     wires
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_generates() {
-        let map = generator(&"testing");
-
-        assert_eq!(map.len(), 0);
-    }
 }
