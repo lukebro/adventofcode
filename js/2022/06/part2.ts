@@ -1,7 +1,5 @@
-export default (file: string) => {
-	const lines = file.split('\n');
+import { solve } from './part1';
 
-	return null;
+export default (input: string) => {
+	return solve(14, input);
 };
-
-export const input = 'example.txt';
