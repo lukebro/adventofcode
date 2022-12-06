@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 // use aoc::*;
 use std::collections::HashMap;
 
