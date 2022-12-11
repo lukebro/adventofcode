@@ -229,3 +229,13 @@ export const memoize = (
 
 	return memoized;
 };
+
+export const gcd = (a: number, b: number): number => {
+	while (b !== 0) {
+		let t = b;
+		b = a % b;
+		a = t;
+	}
+
+	return Math.max(a, 0 - a);
+};
