@@ -91,14 +91,6 @@ export function calculateDirectorySizes(fs: Directory) {
 }
 
 export function createDirectory(root, name): Directory {
-	const find =
-		root &&
-		root.children.find((stat) => stat.name === name && stat.type === 'dir');
-
-	if (find) {
-		return find;
-	}
-
 	const dir: Directory = {
 		type: 'dir',
 		name,
@@ -112,14 +104,6 @@ export function createDirectory(root, name): Directory {
 }
 
 export function createFile(root, name, size): File {
-	const find =
-		root &&
-		root.children.find((stat) => stat.name === name && stat.type === 'file');
-
-	if (find) {
-		return find;
-	}
-
 	const file: File = { type: 'file', name, size, parent: root };
 	root && root.children.push(file);
 
