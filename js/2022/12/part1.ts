@@ -49,6 +49,7 @@ export function getNeighbors(grid, coord: Coord): Coord[] {
 const key = (coord: Coord) => `${coord[0]},${coord[1]}`;
 
 // implementation https://en.wikipedia.org/wiki/Breadth-first_search
+// BFS for when I need to use this again
 export const findShortestPath = (grid, start: Coord, end: Coord) => {
 	const explored = new Set<String>();
 	const queue = [];
