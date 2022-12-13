@@ -1,5 +1,5 @@
 node_modules
 .DS_Store
 .env
-input.txt
-input/*.txt
+**/input/**/*.txt
+**/input.txt
