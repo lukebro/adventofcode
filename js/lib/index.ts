@@ -54,11 +54,8 @@ interface SolveFunction extends Function {
 	(input: string): Answer;
 }
 
-const getInput = (file) => {
-	return fs
-		.readFileSync(file, 'utf8')
-		.replace(/[\r]/g, '')
-		.replace(/\n+$/g, '');
+const formatInput = (input) => {
+	return input.replace(/[\r]/g, '').replace(/\n+$/g, '');
 };
 
 (async () => {
@@ -109,13 +106,14 @@ const getInput = (file) => {
 
 				input = await response.text();
 				fs.writeFileSync(inputPath, input, 'utf-8');
+				input = formatInput(input);
 			} catch (e) {
 				continue;
 			}
 			// file does not exist
 		} else {
 			try {
-				input = getInput(inputPath);
+				input = formatInput(fs.readFileSync(inputPath, 'utf-8'));
 			} catch (e) {
 				console.error(
 					chalk.red(`Cannot find input for year ${year} day ${day}.`),
@@ -144,7 +142,7 @@ const getInput = (file) => {
 					if (module.input) {
 						prevInput = input;
 						try {
-							input = getInput(path.join(dir, module.input));
+							input = formatInput(path.join(dir, module.input));
 						} catch (e: any) {
 							console.error(
 								chalk.red(`Cannot get custom input "${module.input}"`),
