@@ -142,7 +142,9 @@ const formatInput = (input) => {
 					if (module.input) {
 						prevInput = input;
 						try {
-							input = formatInput(path.join(dir, module.input));
+							input = formatInput(
+								fs.readFileSync(path.join(dir, module.input), 'utf-8'),
+							);
 						} catch (e: any) {
 							console.error(
 								chalk.red(`Cannot get custom input "${module.input}"`),
