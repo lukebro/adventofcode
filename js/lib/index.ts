@@ -65,7 +65,7 @@ const formatInput = (input) => {
 		const dir = path.join(__dirname, '..', year, pad(day, 2));
 
 		if (!fs.existsSync(dir)) {
-			fs.mkdirSync(dir);
+			fs.mkdirSync(dir, { recursive: true });
 			const template = path.join(__dirname, 'template.ts');
 			fs.copySync(template, path.join(dir, 'part1.ts'));
 			fs.copySync(template, path.join(dir, 'part2.ts'));
