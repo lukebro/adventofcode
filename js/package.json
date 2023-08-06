@@ -1,20 +1,22 @@
 {
-    "private": true,
-    "author": "Lukasz Brodowski <lukebrodowski@gmail.com>",
-    "license": "MIT",
-    "scripts": {
-        "start": "tsx lib/index.ts",
-        "format": "prettier -w '**/*.{ts,js}'"
-    },
-    "dependencies": {
-        "chalk": "^5",
-        "dotenv": "^16.3.1",
-        "fs-extra": "^11.1.1"
-    },
-    "devDependencies": {
-        "@types/node": "^20.4.8",
-        "prettier": "^3.0.1",
-        "tsx": "^3.12.7",
-        "typescript": "^5.1.6"
-    }
+	"private": true,
+	"author": "Lukasz Brodowski <lukebrodowski@gmail.com>",
+	"type": "module",
+	"license": "MIT",
+	"scripts": {
+		"start": "tsx lib",
+		"check": "tsc",
+		"format": "prettier -w '**/*.{ts,js}'"
+	},
+	"dependencies": {
+		"chalk": "^5",
+		"dotenv": "^16.3.1",
+		"fs-extra": "^11.1.1"
+	},
+	"devDependencies": {
+		"@types/node": "^20.4.8",
+		"prettier": "^3.0.1",
+		"tsx": "^3.12.7",
+		"typescript": "^5.1.6"
+	}
 }

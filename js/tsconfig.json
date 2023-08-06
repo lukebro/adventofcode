@@ -1,30 +1,17 @@
 {
-    "compilerOptions": {
-        "types": [
-            "node"
-        ],
-        "strict": false,
-        "noEmit": true,
-        "allowJs": true,
-        "target": "ESNext",
-        "esModuleInterop": true,
+	"compilerOptions": {
+		"strict": false,
+		"noEmit": true,
+		"allowJs": true,
+		"target": "ESNext",
+		"esModuleInterop": true,
+        "module": "CommonJS",
         "moduleResolution": "node",
-        "baseUrl": ".",
-        "paths": {
-            "@lib/*": [
-                "./lib/*"
-            ]
-        },
-    },
-    "include": [
-        "./**/*"
-    ],
-    "exclude": [
-        "**/node_modules/**/*"
-    ],
-    "ts-node": {
-        "require": [
-            "tsconfig-paths/register"
-        ]
-    }
+		"baseUrl": ".",
+		"paths": {
+			"@lib/*": ["./lib/*"]
+		}
+	},
+	"include": ["./**/*"],
+	"exclude": ["**/node_modules/**/*"]
 }

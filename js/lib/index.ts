@@ -3,7 +3,7 @@ import path from 'node:path';
 import { performance } from 'node:perf_hooks';
 import fse from 'fs-extra';
 import chalk from 'chalk';
-import { pad } from '@lib/utils';
+import { pad } from './utils';
 
 const args = process.argv.splice(2);
 
@@ -19,7 +19,7 @@ let days;
 if (!ioDay) {
 	try {
 		days = fse
-			.readdirSync(path.join(__dirname, '..', year), {
+			.readdirSync(path.join(process.cwd(), year), {
 				withFileTypes: true,
 			})
 			.filter((dir) => dir.isDirectory())
@@ -61,11 +61,11 @@ const formatInput = (input) => {
 	for await (const day of days) {
 		console.log(chalk.white.bold(`Day: ${day}`));
 
-		const dir = path.join(__dirname, '..', year, pad(day, 2));
+		const dir = path.join(process.cwd(), year, pad(day, 2));
 
 		if (!fse.existsSync(dir)) {
 			fse.mkdirSync(dir, { recursive: true });
-			const template = path.join(__dirname, 'template.ts');
+			const template = path.join(process.cwd(), 'lib', 'template.ts');
 			fse.copySync(template, path.join(dir, 'part1.ts'));
 			fse.copySync(template, path.join(dir, 'part2.ts'));
 			fse.outputFileSync(path.join(dir, 'example.txt'), '');
@@ -121,7 +121,7 @@ const formatInput = (input) => {
 			}
 		}
 
-		for (const part of sections) {
+		for await (const part of sections) {
 			let module:
 				| { default: SolveFunction; skip?: boolean; input?: string }
 				| SolveFunction;
@@ -130,7 +130,7 @@ const formatInput = (input) => {
 			let prevInput;
 
 			try {
-				module = require(path.join(dir, `part${part}`));
+				module = await import(path.join(dir, `part${part}`));
 
 				if (typeof module === 'function') {
 					solver = module;

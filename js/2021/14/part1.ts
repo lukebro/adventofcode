@@ -5,15 +5,16 @@ export default (file: string) => {
 
 	let polymer: string[] = part1.split('');
 
-	const pairInsertion: Map<string, string> = part2
-		.split('\n')
-		.reduce((map, line) => {
+	const pairInsertion: Map<string, string> = part2.split('\n').reduce(
+		(map, line) => {
 			const [left, right]: string[] = findall(/([A-Z]+) -> ([A-Z])/g, line);
 
 			map.set(left, right);
 
 			return map;
-		}, new Map() as Map<string, string>);
+		},
+		new Map() as Map<string, string>,
+	);
 
 	const step = (polymer: string[]) => {
 		for (let i = 0; i < polymer.length - 1; i++) {
