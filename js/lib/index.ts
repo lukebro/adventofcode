@@ -1,10 +1,9 @@
 import 'dotenv/config';
-import path from 'path';
-import fs from 'fs-extra';
+import path from 'node:path';
+import { performance } from 'node:perf_hooks';
+import fse from 'fs-extra';
 import chalk from 'chalk';
-import { performance } from 'perf_hooks';
 import { pad } from '@lib/utils';
-import fetch from 'node-fetch';
 
 const args = process.argv.splice(2);
 
@@ -19,7 +18,7 @@ let days;
 
 if (!ioDay) {
 	try {
-		days = fs
+		days = fse
 			.readdirSync(path.join(__dirname, '..', year), {
 				withFileTypes: true,
 			})
@@ -64,18 +63,18 @@ const formatInput = (input) => {
 
 		const dir = path.join(__dirname, '..', year, pad(day, 2));
 
-		if (!fs.existsSync(dir)) {
-			fs.mkdirSync(dir, { recursive: true });
+		if (!fse.existsSync(dir)) {
+			fse.mkdirSync(dir, { recursive: true });
 			const template = path.join(__dirname, 'template.ts');
-			fs.copySync(template, path.join(dir, 'part1.ts'));
-			fs.copySync(template, path.join(dir, 'part2.ts'));
-			fs.outputFileSync(path.join(dir, 'example.txt'), '');
+			fse.copySync(template, path.join(dir, 'part1.ts'));
+			fse.copySync(template, path.join(dir, 'part2.ts'));
+			fse.outputFileSync(path.join(dir, 'example.txt'), '');
 		}
 
 		const inputPath = path.join(dir, 'input.txt');
 		let input;
 
-		if (!fs.existsSync(inputPath)) {
+		if (!fse.existsSync(inputPath)) {
 			if (!process.env['AOC_SESSION']) {
 				console.error(
 					chalk.red(
@@ -105,7 +104,7 @@ const formatInput = (input) => {
 				}
 
 				input = await response.text();
-				fs.writeFileSync(inputPath, input, 'utf-8');
+				fse.writeFileSync(inputPath, input, 'utf-8');
 				input = formatInput(input);
 			} catch (e) {
 				continue;
@@ -113,7 +112,7 @@ const formatInput = (input) => {
 			// file does not exist
 		} else {
 			try {
-				input = formatInput(fs.readFileSync(inputPath, 'utf-8'));
+				input = formatInput(fse.readFileSync(inputPath, 'utf-8'));
 			} catch (e) {
 				console.error(
 					chalk.red(`Cannot find input for year ${year} day ${day}.`),
@@ -143,7 +142,7 @@ const formatInput = (input) => {
 						prevInput = input;
 						try {
 							input = formatInput(
-								fs.readFileSync(path.join(dir, module.input), 'utf-8'),
+								fse.readFileSync(path.join(dir, module.input), 'utf-8'),
 							);
 						} catch (e: any) {
 							console.error(
