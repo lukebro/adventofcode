@@ -2,12 +2,23 @@
 
 Solutions are in the appropriate year/day directory.
 
-To run a solution run `npm start year [day] [parts]` or `node index.js year [day] [parts]`.
+To run a solution run `pnpm start year [day] [parts]` or `node index.js year [day] [parts]`.
 
 If only a year is provided, all days will run sequentially.
 
+
+## Getting started
+
+If you don't use `pnpm` you can use any other package manager, it's fine.
+
 ```sh
-> npm start 2020 1
+>> pnpm install
+```
+
+## Examples
+
+```sh
+> pnpm start 2020 1
 
 Advent of Code
           2020
@@ -19,7 +30,7 @@ Part 2: 276432018 in 6ms
 ```
 
 ```sh
-> npm start 2020
+> pnpm start 2020
 
 Advent of Code
           2020
@@ -39,7 +50,7 @@ Part 2: 634 in 1ms
 The parts argument can be a comma seperated list of numbers. Omitting it runs parts 1 and 2.
 
 ```sh
-> npm start 2020 1 2
+> pnpm start 2020 1 2
 
 Advent of Code
           2020

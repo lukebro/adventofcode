@@ -5,13 +5,12 @@
 		"allowJs": true,
 		"target": "ESNext",
 		"esModuleInterop": true,
-        "module": "CommonJS",
-        "moduleResolution": "node",
+    "module": "CommonJS",
 		"baseUrl": ".",
 		"paths": {
 			"@lib/*": ["./lib/*"]
 		}
 	},
 	"include": ["./**/*"],
-	"exclude": ["**/node_modules/**/*"]
+	"exclude": ["node_Modules"]
 }
