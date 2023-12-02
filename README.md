@@ -7,5 +7,6 @@ Currently:
 - JavaScript/TypeScript
 - Rust
 - C
+- Go
 
 Each language is in its own folder with instructions on how to run.
