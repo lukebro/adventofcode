@@ -1,25 +1,16 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"os"
+	"aoc/aoc"
 	"strconv"
 )
 
 func main() {
-	sc := bufio.NewScanner(os.Stdin)
-	lines := make([]string, 0, 5120)
-
-	for sc.Scan() {
-		lines = append(lines, sc.Text())
-	}
-
-	part1(lines)
-	part2(lines)
+	aoc.Run(part1, part2)
 }
 
-func part1(lines []string) {
+func part1() int {
+	lines := aoc.ReadLines()
 	dial := 50
 	r := 0
 
@@ -38,10 +29,11 @@ func part1(lines []string) {
 		}
 	}
 
-	fmt.Println("Part1:", r)
+	return r
 }
 
-func part2(lines []string) {
+func part2() int {
+	lines := aoc.ReadLines()
 	dial := 50
 	r := 0
 
@@ -69,5 +61,5 @@ func part2(lines []string) {
 		}
 	}
 
-	fmt.Println("Part2:", r)
+	return r
 }

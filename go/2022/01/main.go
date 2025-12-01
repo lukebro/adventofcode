@@ -1,20 +1,20 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"os"
+	"aoc/aoc"
 	"strconv"
 )
 
 func main() {
-	sc := bufio.NewScanner(os.Stdin)
+	aoc.Run[int, struct{}](part1, nil)
+}
+
+func part1() int {
+	lines := aoc.ReadLines()
 
 	var max int
 	var sum int
-	for sc.Scan() {
-		next := sc.Text()
-
+	for _, next := range lines {
 		if next == "" {
 			if sum > max {
 				max = sum
@@ -27,5 +27,5 @@ func main() {
 		}
 	}
 
-	fmt.Println("Part 1: ", max)
+	return max
 }
