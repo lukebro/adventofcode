@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 )
 
 var raw_bytes []byte
@@ -41,7 +42,7 @@ func ReadLines() []string {
 // Allocate a single string and read all input from stdin into it.
 func ReadAll() string {
 	setup()
-	return string(raw_bytes)
+	return strings.Trim(string(raw_bytes), "\n")
 }
 
 func Run[T1, T2 any](part1 func() T1, part2 func() T2) {
